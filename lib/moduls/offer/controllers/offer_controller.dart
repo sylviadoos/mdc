@@ -20,6 +20,7 @@ import 'package:mdc_card/services/api/main_requests.dart';
 import 'package:mdc_card/shared/constant.dart';
 
 import '../../../shared/accept_request.dart';
+import '../../../shared/constant.dart';
 import '../../add_card/views/screens/web_view.dart';
 import '../../main/controller/main_controller.dart';
 import '../models/offer_payment.dart';
@@ -61,8 +62,8 @@ class OffersController extends GetxController {
     isLoading = true;
     update();
     if(Get.find<MainController>().filterText != ''){
-      servicesModel = await MainDio.getFilterOffers(Get.find<MainController>().filterText!,Get.find<MainController>().country!);}else{
-      servicesModel = await MainDio.getServices(Get.find<MainController>().country!);}
+      servicesModel = await MainDio.getFilterOffers(Get.find<MainController>().filterText!,country!);}else{
+      servicesModel = await MainDio.getServices(country!);}
     isLoading = false;
     update();
     // print(servicesModel!.message);
@@ -155,7 +156,7 @@ update();
   }
 
   getOffersFilter(String filter) async {
-    servicesModel = await MainDio.getFilterOffers(filter,Get.find<MainController>().country!);
+    servicesModel = await MainDio.getFilterOffers(filter,country!);
     update();
     // print(offersModel!.message);
   }
@@ -163,7 +164,7 @@ update();
   getDirectoryFilter(String filter) async {
     //print('object');
   //  print(filter);
-    servicesModel = await MainDio.getFilterOffers(filter,Get.find<MainController>().country!);
+    servicesModel = await MainDio.getFilterOffers(filter,country!);
     update();
 
   //  print(servicesModel!.data![2].addressLatitude);

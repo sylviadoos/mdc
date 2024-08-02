@@ -14,6 +14,7 @@ import 'package:firebase_core_web/firebase_core_web.dart';
 import 'package:firebase_messaging_web/firebase_messaging_web.dart';
 import 'package:flutter_facebook_auth_web/flutter_facebook_auth_web.dart';
 import 'package:flutter_native_splash/flutter_native_splash_web.dart';
+import 'package:flutter_secure_storage_web/flutter_secure_storage_web.dart';
 import 'package:geolocator_web/geolocator_web.dart';
 import 'package:google_maps_flutter_web/google_maps_flutter_web.dart';
 import 'package:google_sign_in_web/google_sign_in_web.dart';
@@ -36,6 +37,7 @@ void registerPlugins([final Registrar? pluginRegistrar]) {
   FirebaseMessagingWeb.registerWith(registrar);
   FlutterFacebookAuthPlugin.registerWith(registrar);
   FlutterNativeSplashWeb.registerWith(registrar);
+  FlutterSecureStorageWeb.registerWith(registrar);
   GeolocatorPlugin.registerWith(registrar);
   GoogleMapsPlugin.registerWith(registrar);
   GoogleSignInPlugin.registerWith(registrar);

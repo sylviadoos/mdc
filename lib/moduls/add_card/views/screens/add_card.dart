@@ -40,7 +40,7 @@ class AddCard extends StatelessWidget {
             Center(
               child: Text(
                 Get.locale.toString() == "en"
-                    ? "It is a service card that providers its holders\nwith a direct discount of up to 80% on \n heath, medical therapeutic, surgical,cosmetics and recreational services \nwithout exception At over 150 accredited \n  entities in Bahrain and Turkey with an \n annual issuance fee of 19.9 BHD only "
+                    ? "It is a service card that providers its holders\nwith a direct discount of up to 80% on \n heath, medical therapeutic, surgical,cosmetics and recreational services \nwithout exception At over 150 accredited \n  entities in Bahrain, Oman and Turkey with an \n annual issuance fee of 19.9 BHD only "
                     : "هي بطاقة خدمة تقدم لحامليها خصماً مباشراً يصل إلى %80 على الخدمات الصحية والطبية العلاجية والجراحية والتجميلية  والترفيهية دون استثناء لدى أكثر من 150 جهة معتمدة في البحرين وتركيا برسم إصدار سنوي قدرة 19.9 دينار بحريني فقط",
                 textAlign: TextAlign.center,
                 style: TextStyle(

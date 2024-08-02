@@ -14,6 +14,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../services/api/auth_requests.dart';
 import '../../../services/local_data/share_pref.dart';
+import '../../../shared/constant.dart';
 import '../models/get_version_model.dart';
 import '../view/screen/login.dart';
 
@@ -181,11 +182,12 @@ class AuthController extends GetxController {
 
   loginFacebook(BuildContext context) async {
     try {
+      FacebookAuth.instance.logOut();
       final facebookLoginResult = await FacebookAuth.instance.login();
       final userDate = await FacebookAuth.instance.getUserData();
       print(userDate);
       final facebookAuthCredential = FacebookAuthProvider.credential(
-          facebookLoginResult.accessToken!.userId);
+          facebookLoginResult.accessToken!.tokenString);
       print(facebookAuthCredential);
       userModel = await AuthDio.loginSocial(
           social_id: userDate['id'],

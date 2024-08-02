@@ -24,6 +24,7 @@ const en = {
   "forgetPassword": "Forget Password ?",
   "fullName": "Full Name",
   "enterFullName": "Enter Full Name",
+  "enterMemberName": "Enter Member Name",
   "phone": "Phone",
   "EnterPhone": "Enter your Phone",
   "haveAccount": "Have Account?",

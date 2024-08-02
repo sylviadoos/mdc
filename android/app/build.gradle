@@ -27,7 +27,7 @@ apply plugin: 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 33
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_15
@@ -73,5 +73,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation platform('com.google.firebase:firebase-bom:30.3.2')
     implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.facebook.android:facebook-login:latest.release'
+    implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
+
+    //implementation 'com.facebook.android:facebook-login:latest.release'
 }

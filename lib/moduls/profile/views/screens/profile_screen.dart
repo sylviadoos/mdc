@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:mdc_card/moduls/main/views/screens/Countries.dart';
 import 'package:mdc_card/moduls/profile/controller/profile_controller.dart';
 import 'package:mdc_card/moduls/profile/views/screens/contact_us.dart';
 import 'package:mdc_card/moduls/profile/views/screens/edit_profile.dart';
@@ -192,7 +193,36 @@ class MyProfile extends StatelessWidget {
                     ),
                     Divider(
                       height: 0.h,
+                    ), ListTile(
+                      onTap: ()  {
+
+                          Get.to(() => CountriesScreen());
+
+                      },
+                      contentPadding: EdgeInsets.zero,
+                      leading: SizedBox(
+                        width: 25.w,
+                        height: 25.h,
+                        child: Icon(
+                          Icons.location_city,
+                          size: 25,
+                          color: HexaColor.fromHexa('#00A19B'),
+                        ),
+                      ),
+                      title: Text(
+                        "Change country".tr,
+                        style: TextStyle(
+                            fontSize: 16.sp, fontWeight: FontWeight.w600),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20.w,
+                      ),
                     ),
+                    Divider(
+                      height: 0.h,
+                    ),
+
                     ListTile(
                       onTap: () async {
                         // launchUrl(Uri.parse("http://app.mdc-card.com//api/about"));

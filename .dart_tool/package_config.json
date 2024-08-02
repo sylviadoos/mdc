@@ -230,6 +230,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "facebook_auth_desktop",
+      "rootUri": "file:///C:/Users/c.delivery%20for%20lap/AppData/Local/Pub/Cache/hosted/pub.dev/facebook_auth_desktop-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "fake_async",
       "rootUri": "file:///C:/Users/c.delivery%20for%20lap/AppData/Local/Pub/Cache/hosted/pub.dev/fake_async-1.3.1",
       "packageUri": "lib/",
@@ -339,21 +345,21 @@
     },
     {
       "name": "flutter_facebook_auth",
-      "rootUri": "file:///C:/Users/c.delivery%20for%20lap/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_facebook_auth-4.4.1+1",
+      "rootUri": "file:///C:/Users/c.delivery%20for%20lap/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_facebook_auth-7.0.1",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.0"
     },
     {
       "name": "flutter_facebook_auth_platform_interface",
-      "rootUri": "file:///C:/Users/c.delivery%20for%20lap/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_facebook_auth_platform_interface-3.2.0",
+      "rootUri": "file:///C:/Users/c.delivery%20for%20lap/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_facebook_auth_platform_interface-6.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.0"
     },
     {
       "name": "flutter_facebook_auth_web",
-      "rootUri": "file:///C:/Users/c.delivery%20for%20lap/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_facebook_auth_web-3.2.0",
+      "rootUri": "file:///C:/Users/c.delivery%20for%20lap/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_facebook_auth_web-6.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.0"
     },
     {
       "name": "flutter_html",
@@ -396,6 +402,42 @@
       "rootUri": "file:///C:/Users/c.delivery%20for%20lap/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_screenutil-5.9.0",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+    },
+    {
+      "name": "flutter_secure_storage",
+      "rootUri": "file:///C:/Users/c.delivery%20for%20lap/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_secure_storage-9.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_secure_storage_linux",
+      "rootUri": "file:///C:/Users/c.delivery%20for%20lap/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_secure_storage_linux-1.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_secure_storage_macos",
+      "rootUri": "file:///C:/Users/c.delivery%20for%20lap/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_secure_storage_macos-3.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_secure_storage_platform_interface",
+      "rootUri": "file:///C:/Users/c.delivery%20for%20lap/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_secure_storage_platform_interface-1.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_secure_storage_web",
+      "rootUri": "file:///C:/Users/c.delivery%20for%20lap/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_secure_storage_web-1.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_secure_storage_windows",
+      "rootUri": "file:///C:/Users/c.delivery%20for%20lap/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_secure_storage_windows-3.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "flutter_svg",
@@ -1106,7 +1148,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-04-05T11:55:28.526607Z",
+  "generated": "2024-07-03T19:33:25.050470Z",
   "generator": "pub",
   "generatorVersion": "3.3.0"
 }

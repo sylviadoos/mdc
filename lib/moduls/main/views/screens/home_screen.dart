@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
@@ -54,7 +56,7 @@ class HomeScreen extends StatelessWidget {
 
                           fit: BoxFit.fill,
                           image: AssetImage(
-                              'assets/images/${logic.country_id!.replaceAll("+", "")}.png'),
+                              'assets/images/${countryCode!.replaceAll("+", "")}.png'),
                         ),
                       ),                      child: Stack(
                       clipBehavior: Clip.none,
@@ -298,7 +300,21 @@ class HomeScreen extends StatelessWidget {
                               ),
                               SizedBox(
                                 height: 90.h,
-                                child: ListView.separated(
+                                child:logic.homeModel!.data!.latestOffers!.length ==0 ? Column(
+                                  children: [
+                                    Image.asset('assets/images/zerostate_offer.png',width: 70,height: 50,),
+                                    SizedBox(height: 10.h,),
+                                    InkWell(child: Text('Show all services in you country'.tr,style: TextStyle(
+                                      color: Color(0xa14f4f4f).withOpacity(.4),fontSize: 12,    decoration: TextDecoration.underline,
+
+                                    ),),onTap: (){
+                                      logic.filterText = country;
+
+                                      Get.to(() => ServicesScreen());
+                                    },)
+                                  ],
+                                )
+                                    :ListView.separated(
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, i) {
                                       return GestureDetector(
@@ -429,8 +445,9 @@ class HomeScreen extends StatelessWidget {
                                         width: 11.w,
                                       );
                                     },
-                                    itemCount: logic
-                                        .homeModel!.data!.suppliers!.length),
+                                    itemCount:logic
+                                        .homeModel != null ? logic
+                                        .homeModel!.data!.suppliers!.length: 0),
                               )
                             ],
                           )),
@@ -493,9 +510,9 @@ class HomeScreen extends StatelessWidget {
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           // number of items in each row
-                          mainAxisSpacing: 25.0,
+                          mainAxisSpacing: 5.0,
                           // spacing between rows
-                          crossAxisSpacing: 7.0, // spacing between columns
+                          crossAxisSpacing: 5.0, // spacing between columns
                         ),
                         itemBuilder: (context, index) {
                           List servicesTitles = [
@@ -545,30 +562,26 @@ class HomeScreen extends StatelessWidget {
                               //   isScrollControlled: true,
                               // );
                             },
-                            child: Card(
-                              elevation: 0,
-                              color: Colors.white,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    servicesImages[index],
-                                    width: 45,
-                                    height: 43,
-                                  ),
-                                  SizedBox(
-                                    height: 9,
-                                  ),
-                                  Text(
-                                    servicesTitles[index],
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xff054769)),
-                                  ),
-                                ],
-                              ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  servicesImages[index],
+                                  width: 45,
+                                  height: 43,
+                                ),
+                                SizedBox(
+                                  height: 9,
+                                ),
+                                Text(
+                                  servicesTitles[index],
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xff054769)),
+                                ),
+                              ],
                             ),
                           );
                         },

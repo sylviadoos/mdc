@@ -36,18 +36,18 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.12389713915-iuv65l1luac3093i431gtb1ddkpahbj2</string>
-				<string>fb481889350045426</string>
+				<string>fb3614894158770682</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>FacebookAppID</key>
-	<string>481889350045426</string>
+	<string>3614894158770682</string>
 	<key>FacebookClientToken</key>
-	<string>b6c00418bb8b6099e08b034a8f6404f0</string>
+	<string>3529a8261e24d68fb8d99ea247c720dc3529a8261e24d68fb8d99ea247c720dc</string>
 	<key>FacebookDisplayName</key>
-	<string>mdc_card</string>
+	<string>MDC Card</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>comgooglemaps</string>

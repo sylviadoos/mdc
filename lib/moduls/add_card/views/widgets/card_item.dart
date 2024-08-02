@@ -24,8 +24,8 @@ class CardItem extends StatelessWidget {
         flipOnTouch: true,
         direction: FlipDirection.HORIZONTAL,
         front: Container(
-          height: 195.h,
-          width: 300.w,
+          height: MediaQuery.sizeOf(context).width * .56,
+          width: MediaQuery.sizeOf(context).width * .9,
           decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(

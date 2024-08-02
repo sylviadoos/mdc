@@ -8,6 +8,7 @@ import 'package:mdc_card/services/api/main_requests.dart';
 import 'package:mdc_card/moduls/main/models/CountryModel.dart';
 import 'package:mdc_card/moduls/main/models/CountryModel.dart' as dataModel;
 
+import '../../../services/local_data/share_pref.dart';
 import '../../../shared/constant.dart';
 import '../../add_card/views/screens/card.dart';
 import '../../auth/view/screen/login.dart';
@@ -16,13 +17,19 @@ import '../../offer/views/screens/offers_screen.dart';
 import '../../offer/views/screens/services_screen.dart';
 import '../../profile/views/screens/profile_screen.dart';
 import '../views/screens/main_screen.dart';
+import 'package:mdc_card/shared/constant.dart' as constant;
 
 class MainController extends GetxController {
   HomeModel? homeModel;
   CityModel? cityModel;
-  List<dataModel.CityList> countryModel =[dataModel.CityList(id: '+973',name: 'Bahrain'),dataModel.CityList(id: '+90',name: 'Turkey')]  ;
-  String? country='Select country';
-  String? country_id='0';
+  List<dataModel.CityList> countryModel =[dataModel.CityList(id: '+973',name: 'Bahrain',
+      imgPath: 'assets/images/bh.png')
+  ,dataModel.CityList(id: '+968',name: 'Oman',imgPath: 'assets/images/oman.png'
+
+  // ,dataModel.CityList(id: '+90',name: 'Turkey',imgPath: 'assets/images/turkey.png'
+    )]  ;
+  // String? country='Select country';
+  // String? country_id='0';
 
   int selectedIndex = 0;
   TextEditingController search = TextEditingController();
@@ -108,8 +115,13 @@ class MainController extends GetxController {
     // print(cityModel!.status);
   }
   changeSelectCountry(String s,String id) async {
-    country = s;
-    country_id = id;
+    // country = s;
+    // country_id = id;
+    await SharePref.setData(key: 'country',data: s);
+    await SharePref.setData(key: 'countryCode',data: id);
+
+    constant.country =s;
+    constant.countryCode=id;
    // update();
 
     Get.offAll(token == null

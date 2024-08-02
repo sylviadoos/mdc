@@ -750,7 +750,7 @@ Widget _textfieldBtn(int index,logic) {
 
   return InkWell(
     onTap: () => setState(
-          () => isLast ? logic.friendsList!.add('') : logic.friendsList!.removeAt(index),
+          () => isLast && logic.friendsList!.length != 3 ? logic.friendsList!.add('') : logic.friendsList!.removeAt(index),
     ),
     borderRadius: BorderRadius.circular(15),
     child: Container(
@@ -758,10 +758,10 @@ Widget _textfieldBtn(int index,logic) {
       height: 30,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: isLast ? Colors.green : Colors.red,
+        color: isLast && logic.friendsList!.length != 3 ? Colors.green : Colors.red,
       ),
       child: Icon(
-        isLast ? Icons.add : Icons.remove,
+        isLast && logic.friendsList!.length != 3  ? Icons.add : Icons.remove,
         color: Colors.white,
       ),
     ),
@@ -785,17 +785,22 @@ class DynamicTextfield extends StatefulWidget {
 
 class _DynamicTextfieldState extends State<DynamicTextfield> {
   late final TextEditingController _controller;
+  late final TextEditingController _controllerCPR;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
     _controller.text = widget.initialValue ?? '';
+    _controllerCPR = TextEditingController();
+    _controllerCPR.text = widget.initialValue ?? '';
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _controllerCPR.dispose();
+
     super.dispose();
   }
 
@@ -803,29 +808,57 @@ class _DynamicTextfieldState extends State<DynamicTextfield> {
   Widget build(BuildContext context) {
 
     return
-      SizedBox(
-        height: 70.h,
-        child:TextFormField(
-        controller: _controller,
-        onChanged: widget.onChanged,
-        style: TextStyle(color: Colors.black),
+      Column(
+        children: [
+          SizedBox(
+            height: 70.h,
+            child:TextFormField(
+            controller: _controller,
+            onChanged: widget.onChanged,
+            style: TextStyle(color: Colors.black),
 
-        decoration:  InputDecoration( hintText: "enterFullName".tr,
-          fillColor: HexaColor.fromHexa('#F8F8F8'),filled: true,contentPadding: EdgeInsets.all(8),
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color:  Colors.transparent, width: 1.0),
-                borderRadius: BorderRadius.circular(12)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color:  Colors.grey),
-                borderRadius: BorderRadius.circular(12)),
-          disabledBorder: OutlineInputBorder(
-              borderSide:
-              BorderSide(color: Color(0xFF000000), width: 1.0),
-              borderRadius: BorderRadius.circular(12)) ),
-        validator: (v) {
-          if (v == null || v.trim().isEmpty) return 'Please enter something';
-          return null;
-        },
-        ));
+            decoration:  InputDecoration( hintText: "enterMemberName".tr,
+              fillColor: HexaColor.fromHexa('#F8F8F8'),filled: true,contentPadding: EdgeInsets.all(8),
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color:  Colors.transparent, width: 1.0),
+                    borderRadius: BorderRadius.circular(12)),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color:  Colors.grey),
+                    borderRadius: BorderRadius.circular(12)),
+              disabledBorder: OutlineInputBorder(
+                  borderSide:
+                  BorderSide(color: Color(0xFF000000), width: 1.0),
+                  borderRadius: BorderRadius.circular(12)) ),
+            validator: (v) {
+              if (v == null || v.trim().isEmpty) return 'Please enter something';
+              return null;
+            },
+            )),
+    SizedBox(
+    height: 70.h,
+    child:TextFormField(
+    controller: _controllerCPR,
+    onChanged: widget.onChanged,
+    style: TextStyle(color: Colors.black),
+
+    decoration:  InputDecoration( hintText: "enterNamberCPRNo".tr,
+    fillColor: HexaColor.fromHexa('#F8F8F8'),filled: true,contentPadding: EdgeInsets.all(8),
+    enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(color:  Colors.transparent, width: 1.0),
+    borderRadius: BorderRadius.circular(12)),
+    focusedBorder: OutlineInputBorder(
+    borderSide: BorderSide(color:  Colors.grey),
+    borderRadius: BorderRadius.circular(12)),
+    disabledBorder: OutlineInputBorder(
+    borderSide:
+    BorderSide(color: Color(0xFF000000), width: 1.0),
+    borderRadius: BorderRadius.circular(12)) ),
+    validator: (v) {
+    if (v == null || v.trim().isEmpty) return 'Please enter CPR';
+    return null;
+    },
+    ))
+        ],
+      );
   }
 }

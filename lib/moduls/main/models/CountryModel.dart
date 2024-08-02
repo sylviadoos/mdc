@@ -48,12 +48,15 @@ class DataCity {
 class CityList {
   String? id;
   String? name;
+  String? imgPath;
 
-  CityList({this.id, this.name});
+  CityList({this.id, this.name,this.imgPath});
 
   CityList.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    imgPath = json['imgPath'];
+
   }
 
   Map<String, dynamic> toJson() {

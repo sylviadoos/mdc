@@ -14,6 +14,7 @@ const ar = {
   "forgetPassword": "نسيت كلمة المرور",
   "fullName": "الاسم كامل",
   "enterFullName": "ادخل الاسم كامل",
+  "enterMemberName": "ادخل الاسم العضو",
   "phone": "رقم الهاتف",
   "EnterPhone": "ادخل رقم الهاتف",
   "haveAccount": "لدى حساب",

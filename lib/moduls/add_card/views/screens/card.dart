@@ -16,6 +16,7 @@ class CardScreen extends StatefulWidget {
 
 class _CardScreenState extends State<CardScreen> {
   var controller = Get.put(CardController());
+
   @override
   void initState() {
     super.initState();
@@ -34,11 +35,13 @@ class _CardScreenState extends State<CardScreen> {
             onPressed: () {
               Get.to(AddCard());
             },
-            label: Text("addMedicalDiscountCard".tr,        style: Theme.of(context)
-                .textTheme
-                .bodyText1!
-                .copyWith(
-                fontSize: 16.sp, color: Colors.white),),
+            label: Text(
+              "addMedicalDiscountCard".tr,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText1!
+                  .copyWith(fontSize: 16.sp, color: Colors.white),
+            ),
           ),
         ),
         appBar: AppBar(
@@ -70,8 +73,8 @@ class _CardScreenState extends State<CardScreen> {
               : logic.cardModel!.data == null
                   ? NoCard()
                   : Padding(
-                    padding: const EdgeInsets.only(bottom: 17.0),
-                    child: Column(
+                      padding: const EdgeInsets.only(bottom: 17.0),
+                      child: Column(
                         children: [
                           Flexible(
                             child: ListView.separated(
@@ -92,7 +95,7 @@ class _CardScreenState extends State<CardScreen> {
                           )
                         ],
                       ),
-                  );
+                    );
         }));
   }
 }
