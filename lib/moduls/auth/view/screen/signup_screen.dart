@@ -52,6 +52,7 @@ class SignUpScreen extends StatelessWidget {
               key: logic.formKey,
               child: Container(
                   width: double.infinity,
+
                   decoration: const BoxDecoration(
                       image: DecorationImage(
                     fit: BoxFit.fill,
@@ -77,7 +78,7 @@ class SignUpScreen extends StatelessWidget {
                           'fullName'.tr,
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText2!
+                              .displayMedium!
                               .copyWith(fontSize: 16.sp, color: Colors.white),
                         ),
                         SizedBox(
@@ -113,7 +114,7 @@ class SignUpScreen extends StatelessWidget {
                           'email'.tr,
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText2!
+                              .displayMedium!
                               .copyWith(fontSize: 16.sp, color: Colors.white),
                         ),
                         SizedBox(
@@ -150,7 +151,7 @@ class SignUpScreen extends StatelessWidget {
                           'phone'.tr,
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText2!
+                              .displayMedium!
                               .copyWith(fontSize: 16.sp, color: Colors.white),
                         ),
                         SizedBox(
@@ -158,7 +159,7 @@ class SignUpScreen extends StatelessWidget {
                         ),
                         defaultFormField(
                             validate: (s) {
-                              if (s != null) {
+                              if (s!=null) {
                               } else {
                                 return "enterPhoneCorrect".tr;
                               }
@@ -187,7 +188,7 @@ class SignUpScreen extends StatelessWidget {
                           'password'.tr,
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText2!
+                              .displayMedium!
                               .copyWith(fontSize: 16.sp, color: Colors.white),
                         ),
                         SizedBox(
@@ -234,10 +235,7 @@ class SignUpScreen extends StatelessWidget {
                             onPressed: () {
                               logic.signup(context);
                             },
-                            child: Text(
-                              "signUp".tr,
-                              style: TextStyle(color: Colors.white),
-                            ),
+                            child: Text("signUp".tr),
                           ),
                         ),
                         SizedBox(
@@ -261,7 +259,7 @@ class SignUpScreen extends StatelessWidget {
                               'haveAccount'.tr,
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText2!
+                                  .displayMedium!
                                   .copyWith(color: Colors.white),
                             ),
                             SizedBox(
@@ -275,7 +273,7 @@ class SignUpScreen extends StatelessWidget {
                                   'login'.tr,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText2!
+                                      .displayMedium!
                                       .copyWith(color: Colors.white),
                                 )),
                           ],

@@ -21,7 +21,7 @@ class CardItem extends StatelessWidget {
       padding: EdgeInsets.all(11.0),
       child:  FlipCard(
 
-        flipOnTouch: true,
+        flipOnTouch: false,
         direction: FlipDirection.HORIZONTAL,
         front: Container(
           height: MediaQuery.sizeOf(context).width * .56,
@@ -34,12 +34,12 @@ class CardItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(25),
               image: DecorationImage(
                 fit: BoxFit.fill,
-                image:lang == "en" ? AssetImage("assets/images/cardar.png"):AssetImage("assets/images/cardar.png"),
+                image:lang == "en" ? AssetImage("assets/images/card2.png"):AssetImage("assets/images/card2.png"),
               )),
           child: Directionality(
             textDirection: lang == "en" ? TextDirection.ltr:TextDirection.rtl,
             child: Padding(
-              padding: const EdgeInsets.only(top: 7.0),
+              padding: const EdgeInsets.only(top: 2.0),
               child: Column(
         
                 children: [
@@ -262,7 +262,7 @@ crossAxisAlignment: CrossAxisAlignment.start,
                   padding: EdgeInsets.symmetric(horizontal: 18.0.w),
                   child:   Container(
     padding: EdgeInsets.all(2),
-    width: 100.w,
+    width: 160.w,
     decoration: BoxDecoration(
     borderRadius: BorderRadius.circular(4),
     color: HexaColor.fromHexa('#0B646B')),
@@ -276,9 +276,11 @@ crossAxisAlignment: CrossAxisAlignment.start,
                       dataCards!.all_member_name!.toString() !='' ?Padding(
               padding: EdgeInsets.symmetric(horizontal: 18.0.w),
               child:   Text(
+
                             dataCards!.all_member_name!.toString().replaceAll(",", "\n"),
                             style:
-                            TextStyle(fontSize: 12.sp, color:  HexaColor.fromHexa('#0B646B')),
+                            TextStyle(fontSize: 17.sp, color:
+                            Colors.white,letterSpacing: 2,backgroundColor:  HexaColor.fromHexa('#0B646B')),
     )):Container(),
 
                       SizedBox(

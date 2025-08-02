@@ -5,18 +5,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mdc_card/moduls/auth/models/user_model.dart';
-import 'package:mdc_card/moduls/auth/view/screen/update_app_version.dart';
 import 'package:mdc_card/moduls/main/views/screens/main_screen.dart';
 import 'package:mdc_card/shared/constant.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../services/api/auth_requests.dart';
 import '../../../services/local_data/share_pref.dart';
-import '../../../shared/constant.dart';
-import '../models/get_version_model.dart';
-import '../view/screen/login.dart';
 
 class AuthController extends GetxController {
   TextEditingController name = TextEditingController();
@@ -31,18 +25,11 @@ class AuthController extends GetxController {
   TextEditingController emailLogin = TextEditingController();
   String? redirect;
   UserModel? userModel;
-  VersionModel? versionModel;
-  PackageInfo? appPackageInfo;
-  final Uri appGooglePlayUrl = Uri.parse(
-      'https://play.google.com/store/apps/details?id=com.mdc.Card&pcampaignid=web_share');
   bool isPassword = false;
   bool isLoading = false;
   UserModel? user;
-
   @override
   void onInit() {
-   // getLastUpdatedVersion();
-
     AuthDio.init();
     super.onInit();
     SharePref.init();
@@ -75,60 +62,52 @@ class AuthController extends GetxController {
         await SharePref.init();
         userId = await SharePref.getData(key: 'userId');
         token = await SharePref.getData(key: 'token');
-
         await Get.offAll(() => MainScreen());
-
-
         email.clear();
         password.clear();
         name.clear();
         phone.clear();
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(userModel!.message!),
-        ));
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(userModel!.message!),
+            ));
       }
       update();
     }
   }
-
   forget(context) async {
     forgetLoginKey.currentState!.save();
-    Get.bottomSheet(Container(
-      height: 275.h,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25), topRight: Radius.circular(25)),
-          color: Colors.white),
-      child: Center(
-        child: CircularProgressIndicator(
-          color: Theme.of(context).primaryColor,
-        ),
-      ),
-    ));
-    var x = await AuthDio.forget(
-      emailForget.text,
-    );
-    Get.back();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(x.toString()),
-    ));
-    update();
+      Get.bottomSheet(Container(
+        height: 275.h,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+            color: Colors.white),
+        child: Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),),
+      ));
+      var x = await AuthDio.forget(
+          emailForget.text,
+          );
+      Get.back();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(x.toString()),
+      ));
+      update();
+
   }
 
   loginGoogle(BuildContext context) async {
     final GoogleSignInAccount? googleUser =
-        await GoogleSignIn(scopes: <String>["email"]).signIn();
+    await GoogleSignIn(scopes: <String>["email"]).signIn();
     final GoogleSignInAuthentication googleAuth =
-        await googleUser!.authentication;
+    await googleUser!.authentication;
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
+
     );
     user = await AuthDio.loginSocial(
-        social_id: googleUser.id.toString(),
-        type: "Google",
-        email: googleUser.email);
+        social_id: googleUser.id.toString(), type: "Google",email:googleUser.email );
     if (user != null) {
       await SharePref.init();
       userId = await SharePref.getData(key: 'userId');
@@ -156,12 +135,11 @@ class AuthController extends GetxController {
     final oauthCredential = OAuthProvider("apple.com").credential(
       idToken: appleCredential.identityToken,
     );
-    UserCredential x =
-        await FirebaseAuth.instance.signInWithCredential(oauthCredential);
+    UserCredential x= await FirebaseAuth.instance.signInWithCredential(oauthCredential);
     print(x.user!.email);
     print(appleCredential.userIdentifier);
     userModel = await AuthDio.loginSocial(
-        social_id: appleCredential.userIdentifier,
+        social_id:appleCredential.userIdentifier,
         type: "Apple",
         email: x.user!.email);
     if (userModel?.status == 1) {
@@ -182,7 +160,6 @@ class AuthController extends GetxController {
 
   loginFacebook(BuildContext context) async {
     try {
-      FacebookAuth.instance.logOut();
       final facebookLoginResult = await FacebookAuth.instance.login();
       final userDate = await FacebookAuth.instance.getUserData();
       print(userDate);
@@ -286,38 +263,6 @@ class AuthController extends GetxController {
         );
       }
       update();
-    }
-  }
-
-  getLastUpdatedVersion() async {
-    await getAppVersion();
-    versionModel = await AuthDio.getAppVersion();
-
-    if (versionModel!.version! > int.parse(appPackageInfo!.buildNumber)) {
-      versionModel!.updated = false;
-    } else {
-      versionModel!.updated = true;
-    }
-
-    print(versionModel!.updated);
-    update();
-  }
-
-  getAppVersion() async {
-    try {
-      final info = await PackageInfo.fromPlatform();
-      appPackageInfo = info;
-      update();
-    } on Exception catch (e) {
-      print('ExceptionException$e');
-    }
-
-    // return offersModel;
-  }
-
-  Future launchToGooglePlayUrl() async {
-    if (!await launchUrl(appGooglePlayUrl)) {
-      throw Exception('Could not launch $appGooglePlayUrl');
     }
   }
 // getApiKey() async {

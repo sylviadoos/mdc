@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -8,19 +7,15 @@ import 'package:mdc_card/moduls/auth/models/user_model.dart';
 import 'package:mdc_card/moduls/profile/models/profile_model.dart';
 import 'package:mdc_card/services/local_data/share_pref.dart';
 
-import '../../moduls/auth/models/get_version_model.dart';
 import '../../shared/constant.dart';
 import 'dio.dart';
 
 class AuthDio {
   static Dio? dio;
   static String? baseUrl;
-
   static init() {
     dio = ApiDio.createDio();
     baseUrl = dio!.options.baseUrl;
-
-
   }
 
   static Future<String?> getApiKey() async {
@@ -36,7 +31,7 @@ class AuthDio {
         SharePref.init();
         SharePref.setData(key: "apiKey", data: apiKey);
         apiKey = await SharePref.getData(key: "apiKey");
-        print(apiKey.toString());
+        print(apiKey);
       } else {
         apiKey = "";
       }
@@ -87,7 +82,6 @@ class AuthDio {
     }
     return userModel;
   }
-
   static Future<String?> forget(
     String? email,
   ) async {
@@ -105,9 +99,9 @@ class AuthDio {
             'userrole': "user",
           }));
       if (request.statusCode! < 400) {
-        userModel = request.data['message'];
+        userModel=request.data['message'];
       } else {
-        userModel = request.data['message'];
+        userModel=request.data['message'];
       }
     } on Exception catch (e) {
       print(e);
@@ -173,7 +167,7 @@ class AuthDio {
       FormData formData = FormData.fromMap({
         'fullname': name,
         'profile_image':
-            await MultipartFile.fromFile(image!.path, filename: image.name),
+        await MultipartFile.fromFile(image!.path, filename: image.name),
         "login_type": "Manual",
         "email": email,
         "phone_number": phone,
@@ -221,12 +215,13 @@ class AuthDio {
             "device_token": tokenFireBase,
             "social_id": social_id
           },
-          options: Options(headers: {
-            'apiKey': apiKey,
-            'devicetype': Platform.isAndroid ? "Android" : "ios",
-            'device_token': tokenFireBase,
-            'userrole': "user",
-          }));
+          options: Options(
+              headers: {
+                'apiKey': apiKey,
+                'devicetype': Platform.isAndroid ? "Android" : "ios",
+                'device_token': tokenFireBase,
+                'userrole': "user",
+              }));
       print(request);
       if (request.data['status'] == 1) {
         userModel = UserModel.fromJson(request.data);
@@ -234,7 +229,7 @@ class AuthDio {
         await SharePref.setData(
             key: "token", data: userModel.data!.user!.accessToken!);
         await SharePref.setData(key: "userId", data: userModel.data!.user!.id!);
-      } else if (request.data['status'] == 0) {
+      } else if (request.data['status'] ==0) {
         url = '$baseUrl/signup';
         print(social_id);
         request = await dio!.post(url,
@@ -334,29 +329,5 @@ class AuthDio {
       print(e);
     }
     return apiKey;
-  }
-
-  static Future<VersionModel?> getAppVersion() async {
-    String url = '$baseUrl/getVersion';
-    log(url);
-    Response request;
-    VersionModel? versionModel;
-    try {
-      log(url);
-      request = await dio!.get(
-        url,
-      );
-
-      if (request.statusCode! < 400) {
-        versionModel = VersionModel.fromJson(request.data);
-      } else {
-        versionModel = null;
-      }
-    } on Exception catch (e) {
-      print(e);
-    }
-    log('versionModel.version');
-    log('${versionModel!.version}');
-    return versionModel;
   }
 }

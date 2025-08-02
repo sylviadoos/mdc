@@ -5,20 +5,15 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:mdc_card/moduls/main/views/screens/Countries.dart';
 import 'package:mdc_card/moduls/profile/controller/profile_controller.dart';
 import 'package:mdc_card/moduls/profile/views/screens/contact_us.dart';
 import 'package:mdc_card/moduls/profile/views/screens/edit_profile.dart';
 import 'package:mdc_card/moduls/profile/views/screens/language.dart';
 import 'package:mdc_card/moduls/profile/views/screens/notification_screen.dart';
-import 'package:mdc_card/moduls/profile/views/screens/scan_qr_screen.dart';
 import 'package:mdc_card/moduls/profile/views/screens/term_serivice.dart';
 import 'package:mdc_card/moduls/profile/views/screens/who_are_we.dart';
 import 'package:mdc_card/utils/themes/light_theme.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'my_offers.dart';
 
 class MyProfile extends StatelessWidget {
   const MyProfile({Key? key}) : super(key: key);
@@ -94,276 +89,173 @@ class MyProfile extends StatelessWidget {
             ),
             Expanded(
               flex: 4,
-              child: SingleChildScrollView(
-                child: Container(
-                  color: Colors.white,
-                  padding: EdgeInsets.all(16),
-                  child: Column(children: [
-                    ListTile(
-                      onTap: () async {
-                        Get.to(EditProfile());
-                        await logic.getProfile();
-                      },
-                      leading: SizedBox(
-                          width: 25.w,
-                          height: 25.h,
-                          child:
-                              SvgPicture.asset('assets/images/Path 1119.svg')),
-                      contentPadding: EdgeInsets.zero,
-                      title: Text(
-                        "informationAccount".tr,
-                        style: TextStyle(
-                            fontSize: 16.sp, fontWeight: FontWeight.w600),
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 20.w,
-                      ),
+              child: Container(
+                color: Colors.white,
+                padding: EdgeInsets.all(16),
+                child: Column(children: [
+                  ListTile(
+                    onTap: () async {
+                      Get.to(EditProfile());
+                      await logic.getProfile();
+                    },
+                    leading: SizedBox(
+                        width: 25.w,
+                        height: 25.h,
+                        child: SvgPicture.asset('assets/images/Path 1119.svg')),
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(
+                      "informationAccount".tr,
+                      style: TextStyle(
+                          fontSize: 16.sp, fontWeight: FontWeight.w600),
                     ),
-                    Divider(
-                      height: 0.h,
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 20.w,
                     ),
-                    ListTile(
-                      onTap: () async {
-                        Get.to(()=>MyOffersScreen());
-                        // await logic.getProfile();
-                      },
-                      leading: SizedBox(
+                  ),
+                  Divider(
+                    height: 0.h,
+                  ),
+                  ListTile(
+                    onTap: () {
+                      Get.to(NotificationScreen());
+                    },
+                    contentPadding: EdgeInsets.zero,
+                    leading: SizedBox(
                         width: 25.w,
                         height: 25.h,
                         child:
-                            SvgPicture.asset('assets/images/offers_icon.svg'),
-                      ),
-                      contentPadding: EdgeInsets.zero,
-                      title: Text(
-                        "offer".tr,
-                        style: TextStyle(
-                            fontSize: 16.sp, fontWeight: FontWeight.w600),
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 20.w,
-                      ),
+                            SvgPicture.asset('assets/images/Group 1058.svg')),
+                    title: Text(
+                      "notification".tr,
+                      style: TextStyle(
+                          fontSize: 16.sp, fontWeight: FontWeight.w600),
                     ),
-                    Divider(
-                      height: 0.h,
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 20.w,
                     ),
-                    ListTile(
-                      onTap: () {
-                        Get.to(NotificationScreen());
-                      },
-                      contentPadding: EdgeInsets.zero,
-                      leading: SizedBox(
-                          width: 25.w,
-                          height: 25.h,
-                          child:
-                              SvgPicture.asset('assets/images/Group 1058.svg')),
-                      title: Text(
-                        "notification".tr,
-                        style: TextStyle(
-                            fontSize: 16.sp, fontWeight: FontWeight.w600),
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 20.w,
-                      ),
-                    ),
-                    Divider(
-                      height: 0.h,
-                    ),
-                    ListTile(
-                      onTap: () {
-                        Get.to(LanguageScreen());
-                      },
-                      contentPadding: EdgeInsets.zero,
-                      leading: SizedBox(
-                          width: 25.w,
-                          height: 25.h,
-                          child:
-                              SvgPicture.asset('assets/images/Group 1059.svg')),
-                      title: Text(
-                        "language".tr,
-                        style: TextStyle(
-                            fontSize: 16.sp, fontWeight: FontWeight.w600),
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 20.w,
-                      ),
-                    ),
-                    Divider(
-                      height: 0.h,
-                    ), ListTile(
-                      onTap: ()  {
-
-                          Get.to(() => CountriesScreen());
-
-                      },
-                      contentPadding: EdgeInsets.zero,
-                      leading: SizedBox(
+                  ),
+                  Divider(
+                    height: 0.h,
+                  ),
+                  ListTile(
+                    onTap: () {
+                      Get.to(LanguageScreen());
+                    },
+                    contentPadding: EdgeInsets.zero,
+                    leading: SizedBox(
                         width: 25.w,
                         height: 25.h,
-                        child: Icon(
-                          Icons.location_city,
-                          size: 25,
-                          color: HexaColor.fromHexa('#00A19B'),
-                        ),
-                      ),
-                      title: Text(
-                        "Change country".tr,
-                        style: TextStyle(
-                            fontSize: 16.sp, fontWeight: FontWeight.w600),
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 20.w,
-                      ),
+                        child:
+                            SvgPicture.asset('assets/images/Group 1059.svg')),
+                    title: Text(
+                      "language".tr,
+                      style: TextStyle(
+                          fontSize: 16.sp, fontWeight: FontWeight.w600),
                     ),
-                    Divider(
-                      height: 0.h,
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 20.w,
                     ),
-
-                    ListTile(
-                      onTap: () async {
-                        // launchUrl(Uri.parse("http://app.mdc-card.com//api/about"));
-                        PermissionStatus status = await _getCameraPermission();
-                        if (status.isGranted) {
-                          Get.to(() => QRViewExample());
-                        }
-                      },
-                      contentPadding: EdgeInsets.zero,
-                      leading: SizedBox(
+                  ),
+                  Divider(
+                    height: 0.h,
+                  ),
+                  ListTile(
+                    onTap: () {
+                      launchUrl(Uri.parse("http://app.mdc-card.com//api/about"));
+                  //    Get.to(WhoAreWe());
+                    },
+                    contentPadding: EdgeInsets.zero,
+                    leading: SizedBox(
                         width: 25.w,
                         height: 25.h,
-                        child: Icon(
-                          Icons.qr_code,
-                          size: 25,
-                          color: HexaColor.fromHexa('#00A19B'),
-                        ),
-                      ),
-                      title: Text(
-                        "scanQrOffer".tr,
-                        style: TextStyle(
-                            fontSize: 16.sp, fontWeight: FontWeight.w600),
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 20.w,
-                      ),
+                        child: SvgPicture.asset('assets/images/Path 1126.svg')),
+                    title: Text(
+                      "whoAreWe".tr,
+                      style: TextStyle(
+                          fontSize: 16.sp, fontWeight: FontWeight.w600),
                     ),
-                    Divider(
-                      height: 0.h,
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 20.w,
                     ),
-                    ListTile(
-                      onTap: () {
-                        launchUrl(
-                            Uri.parse("http://app.mdc-card.com//api/about"));
-                        //    Get.to(WhoAreWe());
-                      },
-                      contentPadding: EdgeInsets.zero,
-                      leading: SizedBox(
-                          width: 25.w,
-                          height: 25.h,
-                          child:
-                              SvgPicture.asset('assets/images/Path 1126.svg')),
-                      title: Text(
-                        "whoAreWe".tr,
-                        style: TextStyle(
-                            fontSize: 16.sp, fontWeight: FontWeight.w600),
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 20.w,
-                      ),
+                  ),
+                  Divider(
+                    height: 0.h,
+                  ),
+                  ListTile(
+                    onTap: () {
+                      Get.to(ContactUs());
+                    },
+                    contentPadding: EdgeInsets.zero,
+                    leading: SizedBox(
+                        width: 25.w,
+                        height: 25.h,
+                        child: SvgPicture.asset(
+                            'assets/images/noun-support-4831710.svg')),
+                    title: Text(
+                      "contactUs".tr,
+                      style: TextStyle(
+                          fontSize: 16.sp, fontWeight: FontWeight.w600),
                     ),
-                    Divider(
-                      height: 0.h,
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 20.w,
                     ),
-                    ListTile(
-                      onTap: () {
-                        Get.to(ContactUs());
-                      },
-                      contentPadding: EdgeInsets.zero,
-                      leading: SizedBox(
-                          width: 25.w,
-                          height: 25.h,
-                          child: SvgPicture.asset(
-                              'assets/images/noun-support-4831710.svg')),
-                      title: Text(
-                        "contactUs".tr,
-                        style: TextStyle(
-                            fontSize: 16.sp, fontWeight: FontWeight.w600),
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 20.w,
-                      ),
+                  ),
+                  Divider(
+                    height: 0.h,
+                  ),
+                  ListTile(
+                    onTap: () {
+                      launchUrl(Uri.parse("http://app.mdc-card.com//api/policy"));
+                    //   Get.to(TermSerivce());
+                    },
+                    contentPadding: EdgeInsets.zero,
+                    leading: SizedBox(
+                        width: 25.w,
+                        height: 25.h,
+                        child: SvgPicture.asset('assets/images/Path 1128.svg')),
+                    title: Text(
+                      "termsofService".tr,
+                      style: TextStyle(
+                          fontSize: 16.sp, fontWeight: FontWeight.w600),
                     ),
-                    Divider(
-                      height: 0.h,
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 20.w,
                     ),
-                    ListTile(
-                      onTap: () {
-                        launchUrl(
-                            Uri.parse("http://app.mdc-card.com//api/policy"));
-                        //   Get.to(TermSerivce());
-                      },
-                      contentPadding: EdgeInsets.zero,
-                      leading: SizedBox(
-                          width: 25.w,
-                          height: 25.h,
-                          child:
-                              SvgPicture.asset('assets/images/Path 1128.svg')),
-                      title: Text(
-                        "termsofService".tr,
-                        style: TextStyle(
-                            fontSize: 16.sp, fontWeight: FontWeight.w600),
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 20.w,
-                      ),
+                  ),
+                  Divider(
+                    height: 0.h,
+                  ),
+                  ListTile(
+                    onTap: () async {
+                      await logic.logout();
+                    },
+                    contentPadding: EdgeInsets.zero,
+                    leading: SizedBox(
+                        width: 25.w,
+                        height: 25.h,
+                        child: SvgPicture.asset('assets/images/Path 1130.svg')),
+                    title: Text(
+                      "logout".tr,
+                      style: TextStyle(
+                          fontSize: 16.sp, fontWeight: FontWeight.w600),
                     ),
-                    Divider(
-                      height: 0.h,
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 20.w,
                     ),
-                    ListTile(
-                      onTap: () async {
-                        await logic.logout();
-                      },
-                      contentPadding: EdgeInsets.zero,
-                      leading: SizedBox(
-                          width: 25.w,
-                          height: 25.h,
-                          child:
-                              SvgPicture.asset('assets/images/Path 1130.svg')),
-                      title: Text(
-                        "logout".tr,
-                        style: TextStyle(
-                            fontSize: 16.sp, fontWeight: FontWeight.w600),
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 20.w,
-                      ),
-                    ),
-                  ]),
-                ),
+                  ),
+                ]),
               ),
             )
           ]),
         );
       }),
     );
-  }
-
-  Future<PermissionStatus> _getCameraPermission() async {
-    var status = await Permission.camera.status;
-    if (!status.isGranted) {
-      final result = await Permission.camera.request();
-      return result;
-    } else {
-      return status;
-    }
   }
 }

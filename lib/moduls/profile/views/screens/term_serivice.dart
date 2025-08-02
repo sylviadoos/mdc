@@ -27,26 +27,25 @@ class _TermSerivceState extends State<TermSerivce> {
       ),
       body: GetBuilder<ProfileController>(builder: (logic) {
         return
-        InAppWebView(
-          initialUrlRequest: URLRequest(url: Uri.parse('http://app.mdc-card.com//api/policy')),
-          initialOptions: InAppWebViewGroupOptions(
-            android: AndroidInAppWebViewOptions(
-              useHybridComposition: true,
+          InAppWebView(
+            initialUrlRequest: URLRequest(url: WebUri('http://app.mdc-card.com//api/policy')),
+            initialOptions: InAppWebViewGroupOptions(
+              android: AndroidInAppWebViewOptions(
+                useHybridComposition: true,
+              ),
+              crossPlatform: InAppWebViewOptions(
+                useShouldOverrideUrlLoading: true,
+              ),
             ),
-            crossPlatform: InAppWebViewOptions(
-              useShouldOverrideUrlLoading: true,
-            ),
-          ),
-          onWebViewCreated: (controller) {
-          },
-          onLoadStart: (controller, url) {
-            print('Page started loading: $url');
-          },
-          onLoadStop: (controller, url) {
-            print('Page finished loading: $url');
-          },
-        );
-      }),
+            onWebViewCreated: (controller) {
+            },
+            onLoadStart: (controller, url) {
+              print('Page started loading: $url');
+            },
+            onLoadStop: (controller, url) {
+              print('Page finished loading: $url');
+            },
+          );})
     );
   }
 }

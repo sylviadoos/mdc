@@ -56,10 +56,9 @@ class WhoAreWe extends StatelessWidget {
       //     ),
       //   ]),
       // ),
-       // https://app.mdc-card.com//api
       body: GetBuilder<ProfileController>(builder: (logic) {
         return WebView(
-          initialUrl: 'https://app.mdc-card.com/mdc_demo/api/about',
+          initialUrl: 'https://app.mdc-card.com//api/about',
         );
       }),
       //

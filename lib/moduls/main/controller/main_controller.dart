@@ -5,38 +5,21 @@ import 'package:mdc_card/moduls/main/models/home_model.dart';
 import 'package:mdc_card/moduls/main/views/screens/home_screen.dart';
 import 'package:mdc_card/moduls/offer/controllers/offer_controller.dart';
 import 'package:mdc_card/services/api/main_requests.dart';
-import 'package:mdc_card/moduls/main/models/CountryModel.dart';
-import 'package:mdc_card/moduls/main/models/CountryModel.dart' as dataModel;
 
-import '../../../services/local_data/share_pref.dart';
-import '../../../shared/constant.dart';
 import '../../add_card/views/screens/card.dart';
-import '../../auth/view/screen/login.dart';
-import '../../offer/models/services_model.dart';
+import '../../offer/models/offers_model.dart';
 import '../../offer/views/screens/offers_screen.dart';
-import '../../offer/views/screens/services_screen.dart';
 import '../../profile/views/screens/profile_screen.dart';
-import '../views/screens/main_screen.dart';
-import 'package:mdc_card/shared/constant.dart' as constant;
 
 class MainController extends GetxController {
   HomeModel? homeModel;
   CityModel? cityModel;
-  List<dataModel.CityList> countryModel =[dataModel.CityList(id: '+973',name: 'Bahrain',
-      imgPath: 'assets/images/bh.png')
-  ,dataModel.CityList(id: '+968',name: 'Oman',imgPath: 'assets/images/oman.png'
-
-  // ,dataModel.CityList(id: '+90',name: 'Turkey',imgPath: 'assets/images/turkey.png'
-    )]  ;
-  // String? country='Select country';
-  // String? country_id='0';
-
   int selectedIndex = 0;
   TextEditingController search = TextEditingController();
   List<String?> textFilter = [];
-  ServicesModel? servicesModel;
+  OffersModel? offersModel;
   List<DataOffer> searchList = [];
-  String? filterText='';
+  String? filterText;
   bool isLoading = false;
   bool isLoadingHome = false;
   List<bool> checked = [
@@ -54,8 +37,8 @@ class MainController extends GetxController {
     false
   ];
   getOffers() async {
-    servicesModel = await MainDio.getServices(country!);
-    searchList = servicesModel!.data!;
+    offersModel = await MainDio.getOffers();
+    searchList = offersModel!.data!;
     print(searchList.length);
     update();
   }
@@ -64,7 +47,7 @@ class MainController extends GetxController {
     searchList.clear();
      isLoading = true;
      update();
-    servicesModel=await MainDio.search(s,country!);
+   offersModel=await MainDio.search(s);
     isLoading = false;
     update();
   }
@@ -90,65 +73,30 @@ class MainController extends GetxController {
     HomeScreen(),
     CardScreen(),
     OfferScreen(),
-    // ServicesScreen(),
     MyProfile(),
   ];
   void onItemTapped(int index) {
     selectedIndex = index;
     update();
     if (selectedIndex == 2) {
-      Get.put(OffersController()).getServices();
+      Get.put(OffersController()).getOffers();
     }
     update();
   }
 
   getHome() async {
     isLoadingHome = true;
-    homeModel = await MainDio.getHome(country!);
+    homeModel = await MainDio.getHome();
     isLoadingHome = false;
-    // print(homeModel!.status);
+    print(homeModel!.status);
     update();
   }
 
   getCity() async {
     cityModel = await MainDio.getCity();
-    // print(cityModel!.status);
+    print(cityModel!.status);
   }
-  changeSelectCountry(String s,String id) async {
-    // country = s;
-    // country_id = id;
-    await SharePref.setData(key: 'country',data: s);
-    await SharePref.setData(key: 'countryCode',data: id);
 
-    constant.country =s;
-    constant.countryCode=id;
-   // update();
-
-    Get.offAll(token == null
-        ? LoginScreen()
-        : MainScreen());
-    isLoadingHome=true;
-
-    getOffers();
-    getHome();
-    // getCity();
-  //  await MainDio.getServices(country!);
-
-    update();
-      // builder: (context) => (authController.versionModel!.updated!)
-      //     ? token == null
-      //         ? LoginScreen()
-      //         : MainScreen()
-      //     : UpdateAppVersion()),
-
-
-
-
-  }
-  // getCountries() async {
-  //   countryModel = await MainDio.getCountries();
-  //   // print(cityModel!.status);
-  // }
   @override
   void onInit() {
     MainDio.init();
@@ -159,7 +107,6 @@ class MainController extends GetxController {
       getOffers();
       getHome();
       getCity();
-      //getCountries();
     });
     super.onInit();
   }

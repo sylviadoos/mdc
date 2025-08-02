@@ -139,8 +139,10 @@ class _FormCardState extends State<FormCard> {
                         Expanded(
                           child: DynamicTextfield(
                             key: UniqueKey(),
-                            initialValue: logic.friendsList![index],
-                            onChanged: (v) => logic.friendsList![index] = v,
+                            initialName: logic.friendsList![index]['name'],
+                            initialCPR: logic.friendsList![index]['cpr'],
+                            onNameChanged: (v) => logic.onFriendFieldChanged(index, 'name', v),
+                            onCPRChanged: (v) => logic.onFriendFieldChanged(index, 'cpr', v),
                           ),
                         ),
                         const SizedBox(width: 20),
@@ -731,7 +733,7 @@ class _FormCardState extends State<FormCard> {
                         "confirmOrder".tr,
                         style: Theme.of(context)
                             .textTheme
-                            .bodyText1!
+                            .bodyLarge!
                             .copyWith(fontSize: 16.sp, color: Colors.white),
                       ),
                     ),
@@ -750,7 +752,7 @@ Widget _textfieldBtn(int index,logic) {
 
   return InkWell(
     onTap: () => setState(
-          () => isLast && logic.friendsList!.length != 3 ? logic.friendsList!.add('') : logic.friendsList!.removeAt(index),
+          () => isLast && logic.friendsList!.length != 3 ? logic.friendsList!.add({'name': '', 'cpr': ''}) : logic.friendsList!.removeAt(index),
     ),
     borderRadius: BorderRadius.circular(15),
     child: Container(
@@ -770,13 +772,17 @@ Widget _textfieldBtn(int index,logic) {
 }
 
 class DynamicTextfield extends StatefulWidget {
-  final String? initialValue;
-  final void Function(String) onChanged;
+  final String? initialName;
+  final void Function(String) onNameChanged;
+  final String? initialCPR;
+  final void Function(String) onCPRChanged;
 
   const DynamicTextfield({
     super.key,
-    this.initialValue,
-    required this.onChanged,
+    this.initialName,
+    required this.onNameChanged,
+    this.initialCPR,
+    required this.onCPRChanged,
   });
 
   @override
@@ -791,9 +797,9 @@ class _DynamicTextfieldState extends State<DynamicTextfield> {
   void initState() {
     super.initState();
     _controller = TextEditingController();
-    _controller.text = widget.initialValue ?? '';
+    _controller.text = widget.initialName ?? '';
     _controllerCPR = TextEditingController();
-    _controllerCPR.text = widget.initialValue ?? '';
+    _controllerCPR.text = widget.initialCPR ?? '';
   }
 
   @override
@@ -814,7 +820,7 @@ class _DynamicTextfieldState extends State<DynamicTextfield> {
             height: 70.h,
             child:TextFormField(
             controller: _controller,
-            onChanged: widget.onChanged,
+            onChanged: widget.onNameChanged,
             style: TextStyle(color: Colors.black),
 
             decoration:  InputDecoration( hintText: "enterMemberName".tr,
@@ -837,8 +843,9 @@ class _DynamicTextfieldState extends State<DynamicTextfield> {
     SizedBox(
     height: 70.h,
     child:TextFormField(
+      keyboardType: TextInputType.number,
     controller: _controllerCPR,
-    onChanged: widget.onChanged,
+    onChanged: widget.onCPRChanged,
     style: TextStyle(color: Colors.black),
 
     decoration:  InputDecoration( hintText: "enterNamberCPRNo".tr,

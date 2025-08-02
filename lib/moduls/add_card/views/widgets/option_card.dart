@@ -143,9 +143,10 @@ class _OptionCardState extends State<OptionCard> {
                           ));
                         }
                       : null,
-                  child: Text("registerNow".tr,        style: Theme.of(context)
+                  child: Text("registerNow".tr,
+                    style: Theme.of(context)
                       .textTheme
-                      .bodyText1!
+                      .bodyLarge!
                       .copyWith(
                       fontSize: 16.sp, color: Colors.white),),
                 ),
@@ -164,7 +165,7 @@ class _OptionCardState extends State<OptionCard> {
                     },
                     child: Text("contactOurClients".tr,        style: Theme.of(context)
                         .textTheme
-                        .bodyText1!
+                        .bodyLarge!
                         .copyWith(
                         fontSize: 16.sp, color: Colors.white),),
                   )),

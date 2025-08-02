@@ -96,14 +96,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 children: [
                   Text(
                     title,
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   SizedBox(
                     height: 12.h,
                   ),
                   Text(
                     time,
-                    style: Theme.of(context).textTheme.subtitle2,
+                    style: Theme.of(context).textTheme.titleSmall,
                   )
                 ],
               ),

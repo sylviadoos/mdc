@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-// import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:mdc_card/moduls/add_card/card_controller/card_controller.dart';
 import 'package:mdc_card/moduls/offer/controllers/offer_controller.dart';
-import 'package:mdc_card/moduls/offer/views/screens/offers_map_screen.dart';
+import 'package:mdc_card/moduls/offer/views/screens/details_offer.dart';
 import 'package:mdc_card/utils/themes/light_theme.dart';
 
 import '../../../main/controller/main_controller.dart';
-import 'details_offers.dart';
 
 class OfferScreen extends StatefulWidget {
   OfferScreen({Key? key}) : super(key: key);
@@ -22,382 +18,231 @@ class OfferScreen extends StatefulWidget {
 
 class _OfferScreenState extends State<OfferScreen> {
   var controller = Get.put(OffersController());
-
   @override
   void initState() {
-    controller. getOffers();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffF5F5F5),
       appBar: AppBar(
-          toolbarHeight: 0.h,
-          elevation: 0,
-          systemOverlayStyle: SystemUiOverlayStyle(
-              statusBarIconBrightness: Brightness.light,
-              statusBarBrightness: Brightness.light,
-              statusBarColor: Color(0xff054769))),
-      body: Column(
-        children: [
-          SafeArea(
-            child: Container(
-              width: Get.width,
-              height: Get.height * 0.14,
-              decoration: BoxDecoration(
-                // borderRadius:
-                //     BorderRadius.only(bottomRight: Radius.circular(30.0)),
-                image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage('assets/images/circularAppBar.png'),
-                ),
-              ),
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  "offer".tr,
-                  style: TextStyle(color: Colors.white, fontSize: 25),
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: GetBuilder<OffersController>(builder: (logic) {
-              return logic.isLoading
-                  ? Center(
-                      child: CircularProgressIndicator(
-                          color: Theme.of(context).primaryColor),
-                    )
-                  : logic.offersModel!.data == null
-                      ? Center(
-                          child: Image.asset(
-                            'assets/images/not-found.png',
-                            width: 125.w,
-                            height: 125.h,
-                          ),
-                        )
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 10.h, horizontal: 16.w),
-                                child: ListView.separated(
-                                    padding: EdgeInsets.zero,
-                                    itemBuilder: (c, i) {
-                                      return Padding(
-                                        padding: EdgeInsets.only(
-                                            top: 16.0.h, bottom: 8.h),
-                                        child: SizedBox(
-                                          width: double.infinity,
-                                          child: Card(
-                                            color: Colors.white,
-                                            elevation: 0,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(13.0),
-                                              child: Column(
-                                                children: [
-                                                  Image.network(
-                                                    logic.offersModel!.data![i]
-                                                        .image!,
-                                                    fit: BoxFit.fill,
-                                                    // width: 220,
-                                                    height: 150.h,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 9.h,
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      SizedBox(
-                                                        width: 12.w,
-                                                      ),
-                                                      Expanded(
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                              logic
-                                                                  .offersModel!
-                                                                  .data![i]
-                                                                  .description!
-                                                                  .trim(),
-                                                              style: TextStyle(
-                                                                  color: HexaColor
-                                                                      .fromHexa(
-                                                                          '#054769'),
-                                                                  fontSize:
-                                                                      20.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
-                                                            ),
-                                                            SizedBox(
-                                                              height: 10.h,
-                                                            ),
-                                                            Row(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text(
-                                                                  logic
-                                                                          .offersModel!
-                                                                          .data![
-                                                                              i]
-                                                                          .priceAfter!
-                                                                          .toString() +
-                                                                      " L.E",
-                                                                  style: TextStyle(
-                                                                      color: HexaColor
-                                                                          .fromHexa(
-                                                                              '#01AEA8'),
-                                                                      fontSize:
-                                                                          20.sp,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600),
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 50.w,
-                                                                ),
-                                                                Text(
-                                                                  logic
-                                                                          .offersModel!
-                                                                          .data![
-                                                                              i]
-                                                                          .priceBefore!
-                                                                          .toString() +
-                                                                      " L.E",
-                                                                  style: TextStyle(
-                                                                      color: HexaColor
-                                                                          .fromHexa(
-                                                                              '#054769'),
-                                                                      fontSize:
-                                                                          16.sp,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      decoration:
-                                                                          TextDecoration
-                                                                              .lineThrough),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 15.h,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      (logic
-                                                              .offersModel!
-                                                              .data![i]
-                                                              .offerTaken)
-                                                          ? Expanded(
-                                                              child: Row(
-                                                              children: [
-                                                                SvgPicture
-                                                                    .asset(
-                                                                  'assets/images/icons_ok.svg',
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 03,
-                                                                ),
-                                                                Expanded(
-                                                                  child: Text(
-                                                                    'offer_bought_successfully'.tr,
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w500,
-                                                                        fontSize:
-                                                                            14,
-                                                                        color: Color(
-                                                                            0xff054769)),
-                                                                  ),
-                                                                )
-                                                              ],
-                                                            ))
-                                                          : Expanded(
-                                                              child: ElevatedButton(
-                                                                  style: ButtonStyle(
-                                                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            13.0),
-                                                                  ))),
-                                                                  onPressed: () {
-                                                                    CardController()
-                                                                        .changePayValue(
-                                                                            'visa');
-                                                                    logic.takeOffer(
-                                                                        context,
-                                                                        logic
-                                                                            .offersModel!
-                                                                            .data![
-                                                                                i]
-                                                                            .id,
-                                                                        logic
-                                                                            .offersModel!
-                                                                            .data![i]
-                                                                            .priceAfter);
-                                                                    // logic.takeOffer(logic
-                                                                    //     .offersModel!.data![i].id);
-                                                                    // showTakeOfferMessage(
-                                                                    //     context,
-                                                                    //     logic
-                                                                    //         .takeOfferModel!.message);
-                                                                  },
-                                                                  child: Text(
-                                                                    'takeOffer'
-                                                                        .tr,
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .white),
-                                                                  )),
-                                                            ),
-                                                      SizedBox(
-                                                        width: 10.w,
-                                                      ),
-                                                      ElevatedButton(
-                                                          style: ButtonStyle(
-                                                              backgroundColor:
-                                                                  MaterialStateProperty.all<
-                                                                          Color>(
-                                                                      Colors
-                                                                          .white),
-                                                              shape: MaterialStateProperty.all<
-                                                                      RoundedRectangleBorder>(
-                                                                  RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              13.0),
-                                                                      side:
-                                                                          BorderSide(
-                                                                        color: const Color(
-                                                                            0xff00416B),
-                                                                      )))),
-                                                          onPressed: () async {
-                                                            print(
-                                                                'logic.offersModel!.data![i].id');
-                                                            print(logic
-                                                                .offersModel!
-                                                                .data![i]
-                                                                .id);
-                                                            await logic
-                                                                .getDetailsOffer(
-                                                                    logic
-                                                                        .offersModel!
-                                                                        .data![
-                                                                            i]
-                                                                        .id!);
-
-                                                            Get.to(() => DetailsOffer(
-                                                                offerTaken: logic
-                                                                    .offersModel!
-                                                                    .data![i]
-                                                                    .offerTaken));
-                                                          },
-                                                          child: Text(
-                                                            'details'.tr,
-                                                            style: TextStyle(
-                                                                color: const Color(
-                                                                    0xff00416B),
-                                                                fontSize: 15),
-                                                          )),
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    separatorBuilder: (c, i) {
-                                      return Column(
-                                        children: [
-                                          Divider(
-                                            height: 1.h,
-                                          ),
-                                          SizedBox(
-                                            height: 5.h,
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                    itemCount: logic.offersModel!.data!.length),
-                              ),
-                            ),
-                            Container(
-                              height: 40.h,
-                              color: Colors.transparent,
-                            ),
-                          ],
-                        );
-            }),
-          ),
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: HexaColor.fromHexa('#00416B'),
+        ),
+        backgroundColor: HexaColor.fromHexa('#00416B'),
+        title: Text("offer".tr),
+        leading: Container(),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Get.bottomSheet(
+                  FilterOffer(),
+                  isScrollControlled: true,
+                );
+              },
+              icon: SvgPicture.asset('assets/images/Path 1087.svg'))
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await OffersController().getCurrentLocation();
-          Get.to(() => OffersMapScreen());
-        },
-        child: Icon(
-          Icons.map_rounded,
-          color: Colors.white,
-        ),
-      ),
+      body: GetBuilder<OffersController>(builder: (logic) {
+        return logic.isLoading
+            ? Center(
+                child: CircularProgressIndicator(
+                    color: Theme.of(context).primaryColor),
+              )
+            : logic.offersModel!.data == null
+                ? Center(
+                    child: Image.asset(
+                      'assets/images/not-found.png',
+                      width: 125.w,
+                      height: 125.h,
+                    ),
+                  )
+                : Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 10.h, horizontal: 16.w),
+                    child: ListView.separated(
+                        padding: EdgeInsets.zero,
+                        itemBuilder: (c, i) {
+                          return GestureDetector(
+                              onTap: () async {
+                                Get.to(DetailsOffer());
+                                await logic.getDetailsOffer(
+                                    logic.offersModel!.data![i].id!);
+                              },
+                              child: Padding(
+                                padding:
+                                    EdgeInsets.only(top: 16.0.h, bottom: 8.h),
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Image.network(
+                                        logic.offersModel!.data![i].logo!,
+                                        fit: BoxFit.fill,
+                                        width: 90.w,
+                                        height: 90.h,
+                                      ),
+                                      SizedBox(
+                                        width: 12.w,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              logic.offersModel!.data![i].name!,
+                                            ),
+                                            SizedBox(
+                                              height: 18.h,
+                                            ),
+                                            Text(
+                                              logic.offersModel!.data![i]
+                                                  .description!
+                                                  .trim(),
+                                              style: TextStyle(
+                                                  color: HexaColor.fromHexa(
+                                                      '#707070'),
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w500),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ));
+                        },
+                        separatorBuilder: (c, i) {
+                          return Column(
+                            children: [
+                              Divider(
+                                height: 1.h,
+                              ),
+                            ],
+                          );
+                        },
+                        itemCount: logic.offersModel!.data!.length),
+                  );
+      }),
     );
   }
+}
 
-  showTakeOfferMessage(context, message) async {
-    showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            backgroundColor: const Color(0xff00416B),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(
-                  20.0,
-                ),
+class FilterOffer extends StatelessWidget {
+  const FilterOffer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StatefulBuilder(builder: (context, state) {
+      return GetBuilder<MainController>(builder: (logic) {
+        return SafeArea(
+          child: Container(
+            color: Theme.of(context).primaryColor,
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            Get.back();
+                            logic.checked =
+                                logic.checked.map((e) => e = false).toList();
+                          },
+                          child: Icon(
+                            Icons.arrow_back_ios,
+                            size: 25.w,
+                            color: Colors.white,
+                          )),
+                      Text(
+                        "filter".tr,
+                        style: TextStyle(fontSize: 20.sp, color: Colors.white),
+                      ),
+                      Container(),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 25.h,
+                  ),
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: ListView.separated(
+                        itemBuilder: (context, i) {
+                          return GestureDetector(
+                            onTap: () {
+                              logic.changeCheck(
+                                i,
+                                logic.cityModel!.data!.cityList![i].name!,
+                              );
+                            },
+                            child: Container(
+                              width: 100.w,
+                              alignment: Alignment.center,
+                              height: 44.h,
+                              decoration: BoxDecoration(
+                                  color: logic.checked[i]
+                                      ? HexaColor.fromHexa('#00A19B')
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(12)),
+                              child: Text(
+                                logic.cityModel!.data!.cityList![i].name!,
+                                style: TextStyle(
+                                    color: logic.checked[i]
+                                        ? Colors.white
+                                        : Colors.black),
+                              ),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, i) {
+                          return SizedBox(
+                            height: 10.h,
+                          );
+                        },
+                        itemCount: logic.cityModel!.data!.cityList!.length),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  SizedBox(
+                    height: 44.h,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: HexaColor.fromHexa('#00A19B')),
+                      child: Text("filter".tr),
+                      onPressed: () async {
+                        logic.checked =
+                            logic.checked.map((e) => e = false).toList();
+                        var controller = Get.put(OffersController());
+                        await controller.getDirectoryFilter(logic.filterText!);
+                        logic.textFilter = [];
+                        logic.filterText = "";
+                        Get.back();
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
-            content: Container(
-              child: Text(
-                message,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 17, color: Colors.white),
-              ),
-            ),
-          );
-        });
-    await Future.delayed(Duration(seconds: 3));
-    Navigator.of(context).pop();
+          ),
+        );
+      });
+    });
   }
 }

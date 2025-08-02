@@ -80,7 +80,7 @@ class LoginScreen extends StatelessWidget {
                               'email'.tr,
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText2!
+                                  .displayMedium!
                                   .copyWith(
                                       fontSize: 16.sp, color: Colors.white),
                             ),
@@ -117,7 +117,7 @@ class LoginScreen extends StatelessWidget {
                               'password'.tr,
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText2!
+                                  .displayMedium!
                                   .copyWith(
                                       fontSize: 16.sp, color: Colors.white),
                             ),
@@ -188,7 +188,7 @@ class LoginScreen extends StatelessWidget {
                                   logic.login(context);
                                   // Get.to(() => MainScreen());
                                 },
-                                child: Text("login".tr,style: TextStyle(color: Colors.white),),
+                                child: Text("login".tr),
                               ),
                             ),
                             SizedBox(
@@ -272,7 +272,7 @@ class LoginScreen extends StatelessWidget {
                                   'notAccount'.tr,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText2!
+                                      .displayMedium!
                                       .copyWith(color: Colors.white),
                                 ),
                                 SizedBox(
@@ -286,7 +286,7 @@ class LoginScreen extends StatelessWidget {
                                       'signUp'.tr,
                                       style: Theme.of(context)
                                           .textTheme
-                                          .bodyText2!
+                                          .displayMedium!
                                           .copyWith(color: Colors.white),
                                     )),
                               ],

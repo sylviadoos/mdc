@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "12389713915",
     "project_id": "mdc-card",
-    "storage_bucket": "mdc-card.appspot.com"
+    "storage_bucket": "mdc-card.firebasestorage.app"
   },
   "client": [
     {
@@ -13,6 +13,38 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "12389713915-26a114jl74ik96qjb2ef3da6ekq6ighi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.mdc",
+            "certificate_hash": "6b715e796e57c50ccdd4fed2f23140887f676698"
+          }
+        },
+        {
+          "client_id": "12389713915-35fk6jvv2qmr7kl2slocs4fsapdigtrn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.mdc",
+            "certificate_hash": "986f1a13902f0b792c1b235a078488f7b6420a66"
+          }
+        },
+        {
+          "client_id": "12389713915-887pfvn60ttl39s97hie4sksktm24eoq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.mdc",
+            "certificate_hash": "2d3a8e74eac3bdce7dff5913cc54ae91f0307f0b"
+          }
+        },
+        {
+          "client_id": "12389713915-cq0paa1fiqb4ka4h64b5o78ml98vtce4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.mdc",
+            "certificate_hash": "4c7d3d6b576ea9c87efa2adbe1a2a1b179fd0c90"
+          }
+        },
         {
           "client_id": "12389713915-dhjhq0qll1l51bnttqig5inqpt4m4v0c.apps.googleusercontent.com",
           "client_type": 1,
@@ -27,6 +59,14 @@
           "android_info": {
             "package_name": "com.app.mdc",
             "certificate_hash": "1a08b8e4da1ada5507e65b5ed6e58f96e5e3b15f"
+          }
+        },
+        {
+          "client_id": "12389713915-p8fa83fr4bjl5p0na29fdb86te50m5s5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.mdc",
+            "certificate_hash": "938afa18c10633a7e57b63aa224de09c970ca457"
           }
         },
         {
@@ -83,6 +123,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "12389713915-d18jafro21009hk2unqa1kq4306055jv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.mdccard",
+            "certificate_hash": "4c7d3d6b576ea9c87efa2adbe1a2a1b179fd0c90"
+          }
+        },
+        {
           "client_id": "12389713915-mev0krcsnr86mk3vdlbkecvbfj6ggh7e.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -99,14 +147,6 @@
           }
         },
         {
-          "client_id": "12389713915-uf87embn9vgmol47m6j5gieid967p9ce.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.app.mdccard",
-            "certificate_hash": "191dddd78c36ea43c84df1d2aaebc087dc60f4c3"
-          }
-        },
-        {
           "client_id": "12389713915-umq6rahbjg2ah1c5adk5o4t9okn3ch63.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -120,6 +160,67 @@
           "android_info": {
             "package_name": "com.app.mdccard",
             "certificate_hash": "2252938d4e2422159e25db617f707a9cf1cf888b"
+          }
+        },
+        {
+          "client_id": "12389713915-ce8tecscikdj4gvfipb9vl0q2j13p0h1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANqSkFNJoPsncqgJgUfUkahK_aNIZZ5iA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "12389713915-ce8tecscikdj4gvfipb9vl0q2j13p0h1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "12389713915-iuv65l1luac3093i431gtb1ddkpahbj2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.mdc",
+                "app_store_id": "1544942782"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:12389713915:android:098c6ac1f41d503020ed5e",
+        "android_client_info": {
+          "package_name": "com.mdc.Card"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "12389713915-0cttn5o9l25kckpqr74sog9je85r9d95.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mdc.Card",
+            "certificate_hash": "2f29d35c5aab1309e1196e193d28204a48b4669d"
+          }
+        },
+        {
+          "client_id": "12389713915-46gu5qu4f18iepkuup7acts88j9p2bpa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mdc.Card",
+            "certificate_hash": "4c7d3d6b576ea9c87efa2adbe1a2a1b179fd0c90"
+          }
+        },
+        {
+          "client_id": "12389713915-a0g3n51u1o9t6dlkf55jrgpleq08h7gg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mdc.Card",
+            "certificate_hash": "20dfe91b832e97584315a0af97303666c7a62009"
           }
         },
         {

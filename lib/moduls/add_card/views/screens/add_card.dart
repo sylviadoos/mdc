@@ -75,9 +75,10 @@ class AddCard extends StatelessWidget {
                 onPressed: () {
                   Get.bottomSheet(OptionCard());
                 },
-                child: Text("orderNow".tr,        style: Theme.of(context)
+                child: Text("orderNow".tr,
+                  style: Theme.of(context)
                     .textTheme
-                    .bodyText1!
+                    .bodyLarge!
                     .copyWith(
                     fontSize: 16.sp, color: Colors.white),),
               ),

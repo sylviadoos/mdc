@@ -3,12 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:mdc_card/moduls/offer/views/screens/details_services.dart';
+import 'package:mdc_card/moduls/offer/views/screens/details_offer.dart';
 import 'package:mdc_card/utils/component/component.dart';
 import 'package:mdc_card/utils/themes/light_theme.dart';
 
 import '../../offer/controllers/offer_controller.dart';
-import '../../offer/views/screens/details_offers.dart';
 import '../controller/main_controller.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -23,8 +22,7 @@ class SearchScreen extends StatelessWidget {
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: Theme.of(context).primaryColor),
       ),
-      body: GetBuilder<MainController>(
-          builder: (logic) {
+      body: GetBuilder<MainController>(builder: (logic) {
         return SafeArea(
           child: Column(
             children: [
@@ -75,7 +73,7 @@ class SearchScreen extends StatelessWidget {
                         size: 30.w,
                         color: Colors.black,
                       ),
-                      hintText: "search".tr,writeTextColor: Colors.black,
+                      hintText: "search".tr,
                       hintStyle:
                           TextStyle(fontSize: 18.sp, color: Colors.black),
                       fillColor: HexaColor.fromHexa('#F1F4F6'),
@@ -90,31 +88,20 @@ class SearchScreen extends StatelessWidget {
                             backgroundColor: Theme.of(context).primaryColor),
                       ),
                     )
-                  :  logic.servicesModel!.data == null || logic.servicesModel!.data!.length==0
-                  ?  Expanded(
-            child: Center(
-                child: Image.asset(
-                  'assets/images/not-found.png',
-                  width: 125.w,
-                  height: 125.h,
-                ),
-              ))
                   : Flexible(
                       child: Padding(
                         padding: EdgeInsets.all(16),
                         child: ListView.separated(
                             padding: EdgeInsets.zero,
                             itemBuilder: (c, i) {
-                              return InkWell(
+                              return GestureDetector(
                                   onTap: () async {
-                                    Get.to(DetailsServices());
+                                    Get.to(DetailsOffer());
                                     var controller =
                                         Get.put(OffersController());
-                                    print(logic.servicesModel!.data![i].id);
-                                    await controller.getDetailsServices(
-                                        logic.servicesModel!.data![i].id!);
-                                    // await controller.getDetailsDirctory(
-                                    //     logic.servicesModel!.data![i].id!);
+                                    print(logic.offersModel!.data![i].id);
+                                    await controller.getDetailsDirctory(
+                                        logic.offersModel!.data![i].id!);
                                   },
                                   child: Padding(
                                     padding: EdgeInsets.only(
@@ -128,7 +115,7 @@ class SearchScreen extends StatelessWidget {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Image.network(
-                                            logic.servicesModel!.data![i].logo!,
+                                            logic.offersModel!.data![i].logo!,
                                             fit: BoxFit.fill,
                                             width: 90.w,
                                             height: 90.h,
@@ -144,13 +131,13 @@ class SearchScreen extends StatelessWidget {
                                                   MainAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                    logic.servicesModel!.data![i].name!,
+                                                    logic.offersModel!.data![i].name!,
                                                 ),
                                                 SizedBox(
                                                   height: 18.h,
                                                 ),
                                                 Text(
-                                                  logic.servicesModel!.data![i].description!  .trim(),
+                                                  logic.offersModel!.data![i].description!  .trim(),
 
                                                   style: TextStyle(
                                                       color: HexaColor.fromHexa(
@@ -177,7 +164,7 @@ class SearchScreen extends StatelessWidget {
                               );
                               ;
                             },
-                            itemCount: logic.servicesModel!.data!.length),
+                            itemCount: logic.offersModel!.data!.length),
                       ),
                     ),
             ],

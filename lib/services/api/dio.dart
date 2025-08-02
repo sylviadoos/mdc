@@ -19,9 +19,9 @@ class ApiDio {
   static Dio createDio() {
     var dio = Dio(BaseOptions(
         baseUrl:'https://app.mdc-card.com/api',
-        receiveTimeout: 15000, // 15 seconds
-        connectTimeout: 15000,
-        sendTimeout: 15000,
+        receiveTimeout: Duration(seconds: 15000), // 15 seconds
+        connectTimeout: Duration(seconds: 15000),
+        sendTimeout: Duration(seconds: 15000),
         contentType: Headers.jsonContentType,
         headers: {
           'apikey': apiKey,

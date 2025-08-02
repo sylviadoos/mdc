@@ -17,13 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      FirebaseOptions( apiKey: "AIzaSyBhXwJLIJBliCW2qxy0MlVBxNtsYQPOxFw",
-          authDomain: "mdc-card.firebaseapp.com",
-          projectId: "mdc-card",
-          storageBucket: "mdc-card.appspot.com",
-          messagingSenderId: "12389713915",
-          appId: "1:12389713915:web:542e1cb3fafdf58520ed5e",
-          measurementId: "G-GW4KM3WQ7X");
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:

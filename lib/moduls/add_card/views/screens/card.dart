@@ -39,7 +39,7 @@ class _CardScreenState extends State<CardScreen> {
               "addMedicalDiscountCard".tr,
               style: Theme.of(context)
                   .textTheme
-                  .bodyText1!
+                  .bodyLarge!
                   .copyWith(fontSize: 16.sp, color: Colors.white),
             ),
           ),

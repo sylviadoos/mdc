@@ -51,7 +51,7 @@ Widget defaultFormField(
         void Function(String?)? onSaved,
         Color borderColor = Colors.grey,
         double borderRadius = 8,
-        Color? writeTextColor=Colors.black,
+        Color? writeTextColor,
         FocusNode? focusNode,
         void Function()? onEditingComplete,
         TextInputAction? textInputAction,

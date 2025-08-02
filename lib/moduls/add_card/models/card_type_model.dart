@@ -32,14 +32,17 @@ class Data {
   String? name;
   String? price;
   String? status;
+  dynamic is_to_all;
 
-  Data({this.id, this.name, this.price, this.status});
+  Data({this.id, this.name, this.price, this.status,this.is_to_all});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     price = json['price'];
     status = json['status'];
+    is_to_all = json['is_to_all'];
+
   }
 
   Map<String, dynamic> toJson() {
@@ -48,6 +51,8 @@ class Data {
     data['name'] = this.name;
     data['price'] = this.price;
     data['status'] = this.status;
+    data['is_to_all'] = this.is_to_all;
+
     return data;
   }
 }

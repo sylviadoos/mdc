@@ -37,6 +37,8 @@ class DataCards {
   String? acceptedDate;
   String? expiredDate;
   dynamic all_member_name;
+  dynamic all_member_gccId;
+
   String? type;
 
   DataCards(
@@ -48,7 +50,7 @@ class DataCards {
       this.createdDate,
       this.acceptedDate,
       this.expiredDate,
-      this.all_member_name,this.type});
+      this.all_member_name,this.type,this.all_member_gccId});
 
   DataCards.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -61,6 +63,7 @@ class DataCards {
     expiredDate = json['expired_date'];
     all_member_name = json['all_member_name'] !=null? json['all_member_name'] :'';
     type = json['type'];
+    all_member_gccId = json['all_member_gcc_id'] !=null? json['all_member_gcc_id'] :'';
 
   }
 

@@ -8,7 +8,6 @@ import 'package:mdc_card/services/api/auth_requests.dart';
 import 'package:mdc_card/services/api/main_requests.dart';
 import 'package:mdc_card/services/local_data/share_pref.dart';
 
-import '../../offer/models/services_model.dart';
 import '../models/notification_model.dart';
 
 class ProfileController extends GetxController {
@@ -26,16 +25,13 @@ class ProfileController extends GetxController {
   String? birthday;
   String? country;
   ProfileModel? profileModel;
-
   String? message;
   bool loading = false;
   XFile? _image;
   String? type = "Complains";
-
   XFile? get image => _image;
   bool isLoading = false;
   String? term;
-
   changeGroupValue(String s) {
     type = s;
   }
@@ -119,7 +115,7 @@ class ProfileController extends GetxController {
     isLoading = true;
     notificationModel = await MainDio.getNotifations();
     isLoading = false;
-    print(notificationModel!.data);
+    print(notificationModel!  .data);
     update();
   }
 
@@ -130,12 +126,12 @@ class ProfileController extends GetxController {
       isLoading = true;
       var result = await AuthDio.editProfile(
         phone:
-            phone!.text == "" ? profileModel!.data!.phoneNumber : phone!.text,
+        phone!.text == "" ? profileModel!.data!.phoneNumber : phone!.text,
         image: image!,
         email: email!.text == "" ? profileModel!.data!.email : email!.text,
         name: name!.text == "" ? profileModel!.data!.fullname : name!.text,
         address:
-            address!.text == "" ? profileModel!.data!.address : address!.text,
+        address!.text == "" ? profileModel!.data!.address : address!.text,
         city: city!.text == "" ? profileModel!.data!.city : city!.text,
         country: profileModel!.data!.country == ""
             ? profileModel!.data!.country
@@ -197,7 +193,6 @@ class ProfileController extends GetxController {
     update();
   }
 
-
   void onInit() {
     AuthDio.init();
     super.onInit();
@@ -208,7 +203,6 @@ class ProfileController extends GetxController {
     message = await AuthDio.logout();
     await SharePref.init();
     await SharePref.removeKey('token');
-    await SharePref.removeKey('userId');
     Get.put(MainController()).onItemTapped(0);
     Get.offAll(() => LoginScreen());
     update();

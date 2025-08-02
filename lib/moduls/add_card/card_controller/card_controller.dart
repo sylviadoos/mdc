@@ -11,8 +11,8 @@ import 'package:mdc_card/moduls/add_card/views/screens/card.dart';
 import 'package:mdc_card/moduls/add_card/views/screens/web_view.dart';
 import 'package:mdc_card/moduls/main/controller/main_controller.dart';
 import 'package:mdc_card/moduls/main/views/screens/main_screen.dart';
-import 'package:mdc_card/moduls/offer/models/offer_payment.dart';
-import 'package:mdc_card/moduls/offer/models/take_offer.dart';
+// import 'package:mdc_card/moduls/offer/models/offer_payment.dart';
+// import 'package:mdc_card/moduls/offer/models/take_offer.dart';
 import 'package:mdc_card/services/api/main_requests.dart';
 import 'package:mdc_card/shared/accept_request.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -30,14 +30,21 @@ class CardController extends GetxController {
   String? nationality;
   String? cardType;
   XFile? _image;
-  String? groupPay = "visa";
-  List? friendsList = [''];
+  List<XFile?> _images=[];
 
-  TakeOfferModel? takeOfferModel;
+  String? groupPay = "visa";
+  List? friendsList = [
+    {'name': '', 'cpr': ''},
+  ];
+  void onFriendFieldChanged(int index, String key, String value) {
+    friendsList![index][key] = value;
+  }
+  // TakeOfferModel? takeOfferModel;
 
   XFile? get image => _image;
   String groupValuePay = 'yes';
   CardTypeModel? cardTypeModel;
+  CardTypeModel? cardTypeModelAll;
   DocumentTypeModel? documentTypeModel;
   String? price;
   int? idCard;
@@ -88,7 +95,7 @@ class CardController extends GetxController {
             cardType: idCard,
             documentType: idDoc,
             payType: TypeApi,
-            price: price);
+            price: price,countryCode: countryCode);
         // print(
         //     'informationCardSingle!.message${informationCardSingle!.message}');
         // print('informationCardSingle!.status${informationCardSingle!.status}');
@@ -192,12 +199,22 @@ class CardController extends GetxController {
         Get.snackbar("sorry".tr, "choseTypeDoc".tr,
             backgroundColor: Theme.of(context).primaryColor,
             colorText: Colors.white);
-      } else if (image == null) {
+      } else if (groupValue !='familyCard' && image == null) {
         Get.snackbar("sorry".tr,
             lang == "ar" ? "Please upload Image" : "يرجئ تحميل صورة",
             backgroundColor: Theme.of(context).primaryColor,
             colorText: Colors.white);
-      } else {
+      }  else if (groupValue =='familyCard' && _images.isEmpty) {
+        Get.snackbar("sorry".tr,
+            lang == "ar" ? "Please upload Image" : "يرجئ تحميل صورة",
+            backgroundColor: Theme.of(context).primaryColor,
+            colorText: Colors.white);
+      } else if (groupValue =='familyCard' && (_images.length != friendsList!.length)) {
+        Get.snackbar("sorry".tr,
+            lang == "ar" ? "Please upload Image for every member added" : "يرجئ تحميل صورة لكل عضو مضاف",
+            backgroundColor: Theme.of(context).primaryColor,
+            colorText: Colors.white);
+      }else {
         Get.bottomSheet(Container(
           height: 275.h,
           decoration: BoxDecoration(
@@ -210,8 +227,10 @@ class CardController extends GetxController {
             ),
           ),
         ));
+        String names = friendsList!.map((e) => e['name']).join(',');
+        String cprs  = friendsList!.map((e) => e['cpr']).join(',');
         informationCardSingle = await MainDio.postfamilyCard(
-            image: image,
+            image: _images,
             fullname: name.text,
             mobileNumber: phone.text,
             gccId: gcc_id.text,
@@ -222,7 +241,8 @@ class CardController extends GetxController {
             documentType: idDoc,
             payType: TypeApi,
             price: price,
-        allMember:friendsList!.join(','));
+        allMember:names,
+        allGccid: cprs,countryCode: countryCode);
         Get.back();
         print(informationCardSingle!.message);
         print(informationCardSingle!.status);
@@ -330,7 +350,12 @@ class CardController extends GetxController {
                           fontSize: 18.sp, fontWeight: FontWeight.w600),
                     ),
                     onTap: () async {
-                      await _imgFromGallery();
+                      if(groupValue =='familyCard'){
+                        await _imgFromGalleryFamily();
+
+                      }else {
+                        await _imgFromGallery();
+                      }
                       Navigator.of(context).pop();
                     }),
                 ListTile(
@@ -344,7 +369,10 @@ class CardController extends GetxController {
                         TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
                   ),
                   onTap: () async {
-                    await _imgFromCamera();
+                    if(groupValue =='familyCard'){
+                      await _imgFromCameraFamily();
+                    }else{
+                    await _imgFromCamera();}
                     Navigator.of(context).pop();
                   },
                 ),
@@ -366,6 +394,17 @@ class CardController extends GetxController {
     update();
   }
 
+  _imgFromCameraFamily() async {
+    XFile? image = await ImagePicker().pickImage(
+        source: ImageSource.camera,
+        imageQuality: 50,
+        maxHeight: 350,
+        maxWidth: 550);
+
+    _images.add(image);
+    if (_image != null) {}
+    update();
+  }
   _imgFromGallery() async {
     XFile? image = await ImagePicker().pickImage(
         source: ImageSource.gallery,
@@ -378,8 +417,40 @@ class CardController extends GetxController {
     update();
   }
 
+  _imgFromGalleryFamily() async {
+    List<XFile?> image = await ImagePicker().pickMultiImage(
+        // source: ImageSource.gallery,
+        imageQuality: 50,
+        maxHeight: 350,
+        maxWidth: 550);
+
+    _images = image;
+
+    update();
+  }
+
   changeValue(String value) {
     groupValue = value;
+    cardTypeModel?.data?.clear();
+    cardType =null;
+    idCard = 0;
+    for(int i=0;i<cardTypeModelAll!.data!.length;i++){
+      print(groupValue.toString());
+      print(cardTypeModelAll!.data![i].is_to_all.toString());
+      if(cardTypeModelAll!.data![i].is_to_all== 'Family' && groupValue=='familyCard'){
+        cardTypeModel?.data?.add(cardTypeModelAll!.data![i]);
+        idCard = cardTypeModelAll!.data![i].id!;
+        changePrice(cardTypeModelAll!.data![i].price);
+        changeSelectTypeCard(cardTypeModelAll!.data![i].name!);
+      }else if(cardTypeModelAll!.data![i].is_to_all== 'Single' && groupValue!='familyCard'){
+        cardTypeModel?.data?.add(cardTypeModelAll!.data![i]);
+        idCard = cardTypeModelAll!.data![i].id!;
+        changePrice(cardTypeModelAll!.data![i].price);
+        changeSelectTypeCard(cardTypeModelAll!.data![i].name!);
+      }else if(cardTypeModelAll!.data![i].is_to_all== 'All' ){
+        cardTypeModel?.data?.add(cardTypeModelAll!.data![i]);
+      }
+    }
     update();
   }
 
@@ -448,8 +519,10 @@ class CardController extends GetxController {
   ];
 
   getCardType() async {
+    cardTypeModelAll = await MainDio.getCardType();
     cardTypeModel = await MainDio.getCardType();
-    debugPrint(cardTypeModel!.message);
+    changeValue(groupValue);
+
     update();
   }
 
@@ -471,8 +544,36 @@ class CardController extends GetxController {
   getCards() async {
     isLoading = true;
     var result = await MainDio.getCards();
+    List<DataCards>? listCards = [];
     if (result != null) {
-      cardModel = result;
+       cardModel = result;
+
+      result.data!.forEach((item) {
+        listCards.add(item);
+        if(item.all_member_name != null){
+          List<String> members =item.all_member_name!.toString().contains(',')? item.all_member_name.split(','):[];
+          List<String> gccids =item.all_member_gccId!.toString().contains(',') ? item.all_member_gccId.split(','):[];
+
+          for (int i = 0; i < members.length; i++) {
+            String member = members[i];
+
+            listCards.add(DataCards(
+              id: item.id,
+              fullname: member,
+              policy: item.policy,
+              gccId: gccids.isNotEmpty? gccids[i]:'',
+              cardStatus: item.cardStatus,
+              createdDate: item.createdDate,
+              acceptedDate: item.acceptedDate,
+              expiredDate: item.expiredDate,
+              all_member_name: item.all_member_name,
+              type: item.type,
+            ));
+          };
+        }
+      });
+       cardModel!.data=listCards;
+
       isLoading = false;
       update();
     } else {

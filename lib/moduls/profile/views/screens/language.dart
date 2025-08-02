@@ -14,18 +14,13 @@ class LanguageScreen extends StatefulWidget {
 
 class _LanguageScreenState extends State<LanguageScreen> {
   bool isArabic = false;
-@override
-void initState() {
-  lang =='ar' ?isArabic = true :isArabic = false;
-  super.initState();
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-
             Navigator.of(context).pop();
           },
           icon: const Icon(Icons.arrow_back_ios),
@@ -47,7 +42,7 @@ void initState() {
                   isArabic = true;
                   Get.updateLocale(Locale('ar'));
                 });
-                await SharePref.setData(key: 'lang', data: "ar");
+                await SharePref.setData(key: 'ar', data: "ar");
                 lang = await SharePref.getData(key: 'lang');
               },
               child: Row(
@@ -55,10 +50,10 @@ void initState() {
                   Text(
                     'العربية',
                     style: !isArabic
-                        ? Theme.of(context).textTheme.bodyText2
+                        ? Theme.of(context).textTheme.displayMedium
                         : Theme.of(context)
                             .textTheme
-                            .bodyText2!
+                            .displayMedium!
                             .copyWith(color: const Color(0xff009196)),
                   ),
                   const Spacer(),
@@ -84,7 +79,7 @@ void initState() {
                   isArabic = false;
                   Get.updateLocale(Locale('en'));
                 });
-                await SharePref.setData(key: 'lang', data: "en");
+                await SharePref.setData(key: 'en', data: "en");
                 lang = await SharePref.getData(key: 'lang');
               },
               child: Row(
@@ -92,8 +87,8 @@ void initState() {
                   Text(
                     'English',
                     style: isArabic
-                        ? Theme.of(context).textTheme.bodyText2
-                        : Theme.of(context).textTheme.bodyText2!.copyWith(
+                        ? Theme.of(context).textTheme.displayMedium
+                        : Theme.of(context).textTheme.displayMedium!.copyWith(
                               color: const Color(0xff009196),
                             ),
                   ),

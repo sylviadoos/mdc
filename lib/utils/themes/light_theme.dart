@@ -6,6 +6,8 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final lightTheme = ThemeData(
+    useMaterial3: false, // Optional: disable Material 3
+
     iconTheme: const IconThemeData(color: Color(0xff000000), size: 12),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: const Color(0xffFFFFFF),
@@ -26,29 +28,42 @@ final lightTheme = ThemeData(
         systemOverlayStyle: SystemUiOverlayStyle(
             statusBarIconBrightness: Brightness.light,
             statusBarBrightness: Brightness.light,
-            statusBarColor: Color(0xffffffff))),
+            statusBarColor: Color(0xff00416B)
+        )),
     primaryColor: const Color(0xff00416B),
     secondaryHeaderColor: HexaColor.fromHexa('#00A19B'),
     textTheme: TextTheme(
-        bodyText1: TextStyle(color: Colors.white,),
-        subtitle2:
+        titleSmall:
             TextStyle(fontSize: 14.sp, color: HexaColor.fromHexa('#4F4F4F')),
-        subtitle1: TextStyle(
+        titleMedium: TextStyle(
             fontSize: 15.sp,
             color: const Color(0xff4F4F4F),
             fontWeight: FontWeight.w400),
-        headline2: TextStyle(
+        displayMedium: TextStyle(
             fontSize: 22.sp,
             color: const Color(0xff000000),
             fontWeight: FontWeight.bold),
-        bodyText2: TextStyle(
+        bodyMedium: TextStyle(
             fontSize: 16.sp,
             color: const Color(0xff000000),
-            fontWeight: FontWeight.w600)),
+            fontWeight: FontWeight.w600),
+
+      // Add the rest to override purple defaults:
+      bodySmall: TextStyle(color:  Colors.white),
+      bodyLarge: TextStyle(color:  Colors.white),
+      labelSmall: TextStyle(color: Colors.white),
+      labelMedium: TextStyle(color: Colors.white),
+      labelLarge: TextStyle(color:  Colors.white),
+      titleLarge: TextStyle(color:  Colors.white),
+      headlineSmall: TextStyle(color:  Colors.white),
+      headlineMedium: TextStyle(color:  Colors.white),
+      headlineLarge: TextStyle(color:  Colors.white),
+      displaySmall: TextStyle(color:  Colors.white),
+      displayLarge: TextStyle(color:  Colors.white),),
     scaffoldBackgroundColor: Colors.white,
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-            alignment: Alignment.center,
+            alignment: Alignment.center, backgroundColor: const Color(0xff00416B),
             textStyle: TextStyle(
               fontFamily: Get.locale.toString() == "en"
                   ? "Klavika"
@@ -57,23 +72,9 @@ final lightTheme = ThemeData(
               fontWeight: FontWeight.bold,
               color: const Color(0xffffffff),
             ),
-            backgroundColor: const Color(0xff00416B),
             fixedSize: Size(double.infinity, 44.h),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8)))),
-    floatingActionButtonTheme: FloatingActionButtonThemeData(
-      // alignment: Alignment.center,
-      // textStyle: TextStyle(
-      //   fontFamily: Get.locale.toString() == "en"
-      //       ? "Klavika"
-      //       : GoogleFonts.tajawal().fontFamily,
-      //   fontSize: 18.sp,
-      //   fontWeight: FontWeight.bold,
-      //   color: const Color(0xffffffff),
-      // ),
-      backgroundColor: const Color(0xff00416B),
-      // sizeConstraints: Size(double.infinity, 44.h),
-    ),
     textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
       textStyle: TextStyle(
