@@ -4,12 +4,12 @@
 <!--<string name="facebook_app_id">734955280479305</string>-->
 <!--<string name="fb_login_protocol_scheme">fb734955280479305</string>-->
 <!--<string name="facebook_client_token">e36e1623d3291e7b1c2a73836ad0c34a</string>-->
-<!-- <string name="facebook_app_id">734955280479305</string>-->
-<!-- <string name="fb_login_protocol_scheme">fb734955280479305</string>-->
-<!-- <string name="facebook_client_token">e36e1623d3291e7b1c2a73836ad0c34a</string>-->
- <string name="facebook_app_id">3614894158770682</string>
- <string name="fb_login_protocol_scheme">fb3614894158770682</string>
- <string name="facebook_client_token">3529a8261e24d68fb8d99ea247c720dc</string>
+ <string name="facebook_app_id">734955280479305</string>
+ <string name="fb_login_protocol_scheme">fb734955280479305</string>
+ <string name="facebook_client_token">e36e1623d3291e7b1c2a73836ad0c34a</string>
+<!-- <string name="facebook_app_id">3614894158770682</string>-->
+<!-- <string name="fb_login_protocol_scheme">fb3614894158770682</string>-->
+<!-- <string name="facebook_client_token">3529a8261e24d68fb8d99ea247c720dc</string>-->
 
 
 </resources>
