@@ -1,0 +1,20 @@
+workflows:
+  ios-workflow:
+    name: iOS Build
+    max_build_duration: 60
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Get dependencies
+        script: flutter pub get
+      - name: Build iOS IPA
+        script: flutter build ipa --release 
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      app_store_connect:
+        api_key: MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgzFE/SIPiTQekYaqgMKFSdkvGORyCmvjBjE5lyv+QFdOgCgYIKoZIzj0DAQehRANCAASl8YvitRACZZ35BC0u9HZ8mBbuzf/mG8NyoeXmQ7B2kfC6sPTbm3JT9AdiSkyYlhvs02Jjl7cZtSrSZbdOr0oz
+        key_id: 5K298UG3S3
+        issuer_id: a1c3e206-953b-4bf8-ade4-29e27530df90
