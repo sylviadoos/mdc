@@ -8,6 +8,14 @@ workflows:
       cocoapods: default
     scripts:
       - name: Get dependencies
+        script: flutter clean
+      - name: Build iOS IPA
+        script: cd ios
+        script: pod repo update
+        script: pod install
+
+    scripts:
+      - name: Get dependencies
         script: flutter pub get
       - name: Build iOS IPA
         script: flutter build ipa --release 
