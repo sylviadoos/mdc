@@ -78,8 +78,23 @@ jobs:
 
           security cms -D -i "$PROFILE_PATH" > "$RUNNER_TEMP/profile.plist"
           PROFILE_NAME="$(/usr/libexec/PlistBuddy -c 'Print :Name' "$RUNNER_TEMP/profile.plist")"
-          echo "Using provisioning profile: $PROFILE_NAME"
           echo "PROFILE_NAME=$PROFILE_NAME" >> "$GITHUB_ENV"
+
+          echo "----- Provisioning profile debug -----"
+          echo "Name: $PROFILE_NAME"
+          echo "UUID: $(/usr/libexec/PlistBuddy -c 'Print :UUID' "$RUNNER_TEMP/profile.plist")"
+          echo "TeamIdentifier: $(/usr/libexec/PlistBuddy -c 'Print :TeamIdentifier:0' "$RUNNER_TEMP/profile.plist")"
+          echo "AppIDName: $(/usr/libexec/PlistBuddy -c 'Print :AppIDName' "$RUNNER_TEMP/profile.plist")"
+          echo "application-identifier: $(/usr/libexec/PlistBuddy -c 'Print :Entitlements:application-identifier' "$RUNNER_TEMP/profile.plist")"
+          echo "ExpirationDate: $(/usr/libexec/PlistBuddy -c 'Print :ExpirationDate' "$RUNNER_TEMP/profile.plist")"
+          echo "ProvisionsAllDevices: $(/usr/libexec/PlistBuddy -c 'Print :ProvisionsAllDevices' "$RUNNER_TEMP/profile.plist" 2>&1)"
+          echo "ProvisionedDevices count: $(/usr/libexec/PlistBuddy -c 'Print :ProvisionedDevices' "$RUNNER_TEMP/profile.plist" 2>&1 | wc -l)"
+          /usr/libexec/PlistBuddy -c 'Print :DeveloperCertificates:0' "$RUNNER_TEMP/profile.plist" > "$RUNNER_TEMP/profile_cert.der"
+          echo "Embedded certificate subject:"
+          openssl x509 -inform DER -in "$RUNNER_TEMP/profile_cert.der" -noout -subject
+          echo "---------------------------------------"
+          echo "Identities available in keychain:"
+          security find-identity -v -p codesigning
 
       - name: Create ExportOptions.plist
         run: |
