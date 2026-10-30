@@ -46,6 +46,7 @@ class Data {
   String? address;
   List<SliderImages>? sliderImages;
   List<Services>? services;
+  List<DataBranche>? branches;
 
   Data(
       {this.id,
@@ -70,7 +71,8 @@ class Data {
       this.addressLongitude,
       this.address,
       this.sliderImages,
-      this.services});
+      this.services,
+        this.branches});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -104,6 +106,12 @@ class Data {
       services = <Services>[];
       json['services'].forEach((v) {
         services!.add(new Services.fromJson(v));
+      });
+    }
+    if (json['branches'] != null) {
+      branches = <DataBranche>[];
+      json['branches'].forEach((v) {
+        branches!.add(new DataBranche.fromJson(v));
       });
     }
   }
@@ -183,6 +191,54 @@ class Services {
     data['name'] = this.name;
     data['price_before_discount'] = this.priceBeforeDiscount;
     data['price_after_discount'] = this.priceAfterDiscount;
+    return data;
+  }
+
+}
+class DataBranche {
+  int? id;
+  String? name;
+  String? description;
+  String? city;
+  String? logo;
+  dynamic addressLatitude='0';
+  dynamic addressLongitude='0';
+  String? phone_number;
+  String? mobile_number;
+  String? country_code;
+  String? nameAr;
+  String? address;
+
+  DataBranche({this.id, this.name, this.description, this.city, this.logo,required this.addressLatitude
+    ,required this.addressLongitude,
+    this.country_code,this.phone_number,this.mobile_number,this.nameAr,this.address});
+
+  DataBranche.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    nameAr = json['name_ar'];
+    description = json['description'];
+    city = json['city'];
+    logo = json['logo'];
+    address = json['address'];
+    addressLatitude = json['address_latitude'];
+    addressLongitude = json['address_longitude'];
+    phone_number = json['phone_number'];
+    mobile_number = json['mobile_number'];
+    country_code = json['country_code'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['description'] = this.description;
+    data['city'] = this.city;
+    data['logo'] = this.logo;
+    data['address_latitude'] = this.addressLatitude;
+    data['address_longitude'] = this.addressLongitude;
+    data['phone_number'] = this.phone_number;
+    data['country_code'] = this.country_code;
     return data;
   }
 }

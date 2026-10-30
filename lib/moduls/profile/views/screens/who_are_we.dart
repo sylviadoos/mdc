@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mdc_card/moduls/profile/controller/profile_controller.dart';
 import 'package:mdc_card/utils/themes/light_theme.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class WhoAreWe extends StatelessWidget {
   const WhoAreWe({Key? key}) : super(key: key);
@@ -57,8 +57,9 @@ class WhoAreWe extends StatelessWidget {
       //   ]),
       // ),
       body: GetBuilder<ProfileController>(builder: (logic) {
-        return WebView(
-          initialUrl: 'https://app.mdc-card.com//api/about',
+        return InAppWebView(
+          initialUrlRequest:
+              URLRequest(url: WebUri('https://app.mdc-card.com//api/about')),
         );
       }),
       //

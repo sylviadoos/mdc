@@ -63,11 +63,24 @@ class MainScreen extends StatelessWidget {
             BottomNavigationBarItem(
               icon: Padding(
                 padding: const EdgeInsets.all(5.0),
+                child: Icon(
+                  Icons.medical_services_outlined,
+                  size: 22.w,
+                  color: logic.selectedIndex == 3
+                      ? Theme.of(context).primaryColor
+                      : HexaColor.fromHexa('#C6C6C6'),
+                ),
+              ),
+              label: 'Services',
+            ),
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.all(5.0),
                 child: SvgPicture.asset(
                   'assets/images/personcolord.svg',
                   width: 22.w,
                   height: 20.h,
-                  color: logic.selectedIndex == 3
+                  color: logic.selectedIndex == 4
                       ? Theme.of(context).primaryColor
                       : HexaColor.fromHexa('#C6C6C6'),
                 ),

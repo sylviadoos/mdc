@@ -4,7 +4,6 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/components/list_tile/gf_list_tile.dart';
 import 'package:mdc_card/moduls/add_card/views/widgets/pay_widgets.dart';
 import 'package:mdc_card/utils/component/component.dart';
 

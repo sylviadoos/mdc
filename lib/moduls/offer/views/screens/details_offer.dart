@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:mdc_card/moduls/offer/controllers/offer_controller.dart';
 import 'package:mdc_card/utils/themes/light_theme.dart';
@@ -22,6 +21,28 @@ class _DetailsOfferState extends State<DetailsOffer>
   initState() {
     super.initState();
     tapController = TabController(initialIndex: 0, length: 2, vsync: this);
+  }
+
+  /// Small pill action button used inside a branch card.
+  Widget _branchAction(
+      {required IconData icon,
+      required String label,
+      required Color color,
+      required VoidCallback onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+            color: color.withOpacity(.1),
+            borderRadius: BorderRadius.circular(20)),
+        child: Row(mainAxisSize: MainAxisSize.min, children: [
+          Icon(icon, size: 15, color: color),
+          const SizedBox(width: 4),
+          Text(label, style: TextStyle(fontSize: 12, color: color)),
+        ]),
+      ),
+    );
   }
 
   @override
@@ -93,16 +114,22 @@ class _DetailsOfferState extends State<DetailsOffer>
                               width: double.infinity,
                               child: GestureDetector(
                                 onTap: () async {},
-                                child: GFImageOverlay(
-                                    colorFilter: new ColorFilter.mode(
-                                        Colors.black.withOpacity(.05),
-                                        BlendMode.color),
+                                child: Container(
+                                  decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
-                                    image: NetworkImage(logic
-                                        .detailsOffersModel!
-                                        .data!
-                                        .sliderImages![index]
-                                        .image!)),
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      colorFilter: new ColorFilter.mode(
+                                          Colors.black.withOpacity(.05),
+                                          BlendMode.color),
+                                      image: NetworkImage(logic
+                                          .detailsOffersModel!
+                                          .data!
+                                          .sliderImages![index]
+                                          .image!),
+                                    ),
+                                  ),
+                                ),
                               ),
                             );
                           },
@@ -134,6 +161,8 @@ class _DetailsOfferState extends State<DetailsOffer>
                         tabs: [
                           Tab(text: 'servicePrice'.tr),
                           Tab(text: 'details'.tr),
+                          Tab(text: 'branches'.tr),
+
                         ],
                         controller: tapController,
                       ),
@@ -324,6 +353,158 @@ class _DetailsOfferState extends State<DetailsOffer>
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.w500),
                               ),
+
+                              // ---- Branches section ----
+                              if ((logic.detailsOffersModel!.data!.branches ?? [])
+                                  .isNotEmpty) ...[
+                                SizedBox(height: 20.h),
+                                Row(children: [
+                                  Icon(Icons.account_tree_rounded,
+                                      color: Theme.of(context).primaryColor,
+                                      size: 20.w),
+                                  SizedBox(width: 6.w),
+                                  Text('Branches',
+                                      style: TextStyle(
+                                          fontSize: 18.sp,
+                                          fontWeight: FontWeight.bold,
+                                          color: Theme.of(context).primaryColor)),
+                                ]),
+                                SizedBox(height: 12.h),
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  padding: EdgeInsets.zero,
+                                  itemCount: logic
+                                      .detailsOffersModel!.data!.branches!.length,
+                                  itemBuilder: (context, i) {
+                                    final b = logic
+                                        .detailsOffersModel!.data!.branches![i];
+                                    final primary =
+                                        Theme.of(context).primaryColor;
+                                    return Container(
+                                      margin: EdgeInsets.only(bottom: 12.h),
+                                      padding: EdgeInsets.all(12.w),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(14),
+                                        border: Border.all(
+                                            color: const Color(0xffEDEFF2)),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Colors.black
+                                                  .withOpacity(.04),
+                                              blurRadius: 8,
+                                              offset: const Offset(0, 3)),
+                                        ],
+                                      ),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: SizedBox(
+                                              width: 56.w,
+                                              height: 56.w,
+                                              child: (b.logo != null &&
+                                                      b.logo!.isNotEmpty)
+                                                  ? Image.network(b.logo!,
+                                                      fit: BoxFit.cover,
+                                                      errorBuilder: (_, __,
+                                                              ___) =>
+                                                          Container(
+                                                              color: const Color(
+                                                                  0xffE9EEF3),
+                                                              child: Icon(
+                                                                  Icons
+                                                                      .local_hospital,
+                                                                  color:
+                                                                      primary)))
+                                                  : Container(
+                                                      color: const Color(
+                                                          0xffE9EEF3),
+                                                      child: Icon(
+                                                          Icons.local_hospital,
+                                                          color: primary)),
+                                            ),
+                                          ),
+                                          SizedBox(width: 12.w),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(b.name ?? '',
+                                                    style: TextStyle(
+                                                        fontSize: 15.sp,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                if ((b.nameAr ?? '').isNotEmpty)
+                                                  Text(b.nameAr!,
+                                                      style: TextStyle(
+                                                          fontSize: 12.sp,
+                                                          color: Colors.grey)),
+                                                SizedBox(height: 4.h),
+                                                if ((b.address ?? '').isNotEmpty)
+                                                  Row(children: [
+                                                    Icon(Icons.location_on,
+                                                        size: 14.w,
+                                                        color: Colors.redAccent),
+                                                    SizedBox(width: 4.w),
+                                                    Expanded(
+                                                      child: Text(b.address!,
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: TextStyle(
+                                                              fontSize: 12.sp,
+                                                              color: Colors
+                                                                  .grey[700])),
+                                                    ),
+                                                  ]),
+                                                SizedBox(height: 8.h),
+                                                Row(children: [
+                                                  if ((b.phone_number ?? '')
+                                                      .isNotEmpty)
+                                                    _branchAction(
+                                                      icon: Icons.call,
+                                                      label: 'Call',
+                                                      color: primary,
+                                                      onTap: () => launchUrl(
+                                                          Uri.parse(
+                                                              'tel:${b.country_code ?? ''}${b.phone_number}')),
+                                                    ),
+                                                  SizedBox(width: 8.w),
+                                                  if (b.addressLatitude != null &&
+                                                      '${b.addressLatitude}'
+                                                          .isNotEmpty)
+                                                    _branchAction(
+                                                      icon: Icons.directions,
+                                                      label: 'Directions',
+                                                      color: const Color(
+                                                          0xff2E7D32),
+                                                      onTap: () => MapsLauncher
+                                                          .launchCoordinates(
+                                                        double.tryParse(
+                                                                '${b.addressLatitude}') ??
+                                                            0,
+                                                        double.tryParse(
+                                                                '${b.addressLongitude}') ??
+                                                            0,
+                                                        b.name,
+                                                      ),
+                                                    ),
+                                                ]),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
                               SizedBox(
                                 height: 20.h,
                               ),
@@ -658,7 +839,141 @@ class _DetailsOfferState extends State<DetailsOffer>
                                 ],
                               ),
                             ],
-                          ))
+                          )),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 25),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20)),
+                              child:logic
+                                  .detailsOffersModel!
+                                  .data!
+                                  .branches!.length == 0
+                                  ? Center(
+                                  child: Image.asset(
+                                    'assets/images/not-found.png',
+                                    width: 125.w,
+                                    height: 125.h,
+                                  )) : Column(
+                                children: [
+
+
+                                  Expanded(
+                                    child: ListView.separated(
+                                        itemBuilder: (c, i) {
+                                          return Container(
+                                            width: double.infinity,
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 10.w, vertical: 10.h),
+
+                                            child: Column(
+                                              children: [
+                                                GestureDetector(
+                                                    onTap: () async {
+                                                      await MapsLauncher.launchCoordinates(
+                                                          double.parse(logic
+                                                              .detailsOffersModel!
+                                                              .data!
+                                                              .branches![i].addressLatitude),
+                                                          double.parse(logic
+                                                              .detailsOffersModel!
+                                                              .data!
+                                                              .branches![i].addressLongitude));
+                                                    },
+                                                    child: Row(
+
+                                                      children: [
+                                                        SizedBox(
+                                                          height: 30.h,
+                                                          width: 30.w,
+                                                          child: Image.asset(
+                                                            'assets/images/locator.png',
+                                                          ),
+                                                        ),
+
+                                                        Padding(
+                                                          padding: const EdgeInsets.only(top: 8.0,right: 7,left: 7),
+                                                          child: Text(
+                                                            logic
+                                                                .detailsOffersModel!
+                                                                .data!
+                                                                .branches![i]
+                                                                .name!
+                                                            ,
+
+                                                            style: TextStyle(
+                                                                decoration: TextDecoration.underline,
+                                                                fontSize: 14.sp,
+                                                                color: Color(0xff054769),
+                                                                fontWeight:
+                                                                FontWeight.w600),
+                                                          ),
+                                                        ),
+
+
+                                                      ],
+                                                    )),SizedBox(
+                                                  height: 10.h,
+
+                                                ), Row(
+
+                                                  children: [
+                                                    SizedBox(
+                                                      height: 30.h,
+                                                      width: 30.w,
+                                                      child: Icon(size:30,
+                                                        Icons.phone_android,color: Color(0xff054769),
+                                                      ),
+                                                    ),
+
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(top: 8.0,right: 7,left: 7),
+                                                      child: Text(
+                                                        logic
+                                                            .detailsOffersModel!
+                                                            .data!
+                                                            .branches![i]
+                                                            .country_code!+ logic
+                                                            .detailsOffersModel!
+                                                            .data!
+                                                            .branches![i]
+                                                            .phone_number!
+                                                        ,
+
+                                                        style: TextStyle(
+
+                                                            fontSize: 14.sp,
+                                                            color: Color(0xff054769),
+                                                            fontWeight:
+                                                            FontWeight.w600),
+                                                      ),
+                                                    ),
+
+
+                                                  ],
+                                                ),SizedBox(child: Divider(color: Color(
+                                                    0x6f13222a).withOpacity(.2),),width: 130,)
+                                              ],
+                                            ),);
+                                          //
+                                        },
+                                        separatorBuilder: (c, i) {
+                                          return Column(
+                                            children: [
+                                              SizedBox(
+                                                height: 10.h,
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                        itemCount: logic.detailsOffersModel!.data!
+                                            .branches!.length),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       ))
                     ],

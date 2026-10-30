@@ -12,7 +12,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/components/list_tile/gf_list_tile.dart';
 import 'package:mdc_card/moduls/profile/controller/profile_controller.dart';
 
 import '../../../../utils/component/component.dart';

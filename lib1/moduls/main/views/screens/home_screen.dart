@@ -19,6 +19,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../shared/constant.dart';
 import '../../../offer/views/screens/details_offers.dart';
+import '../../../offer/views/screens/details_services.dart';
 import '../../../offer/views/screens/offers_screen.dart';
 import 'MoreFilters.dart';
 import 'heart_beats.dart';

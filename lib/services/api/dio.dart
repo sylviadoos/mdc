@@ -14,11 +14,12 @@ class ApiDio {
   static final _singleton = ApiDio._internal();
 
   factory ApiDio() => _singleton;
-//https://app.mdc-card.com//api
-//https://app.mdc-card.com/mdc_demo/api
+// Base URL is switched from shared/constant.dart -> useLocalServer flag.
+//   online: https://app.mdc-card.com/api
+//   local:  http://10.0.2.2:8000/api (see constant.dart)
   static Dio createDio() {
     var dio = Dio(BaseOptions(
-        baseUrl:'https://app.mdc-card.com/api',
+        baseUrl: activeBaseUrl,
         receiveTimeout: Duration(seconds: 15000), // 15 seconds
         connectTimeout: Duration(seconds: 15000),
         sendTimeout: Duration(seconds: 15000),

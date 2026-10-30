@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import '../../controller/profile_controller.dart';
 
 class TermSerivce extends StatefulWidget {

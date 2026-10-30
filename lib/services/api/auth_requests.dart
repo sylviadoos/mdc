@@ -109,6 +109,62 @@ class AuthDio {
     return userModel;
   }
 
+  /// Check whether a phone number exists in the system BEFORE sending an OTP.
+  /// Returns: true = registered, false = not registered, null = request failed
+  /// (network/server error — do NOT treat this as "not registered").
+  static Future<bool?> checkPhoneExists(String phone) async {
+    String url = '$baseUrl/check-phone';
+    try {
+      final request = await dio!.post(url,
+          data: {'phone': phone},
+          options: Options(headers: {
+            'apiKey': apiKey,
+            'devicetype': Platform.isAndroid ? "Android" : "ios",
+            'userrole': "user",
+          }));
+      if (request.data is Map && request.data['status'] == 1) {
+        return request.data['exists'] == true;
+      }
+      return null;
+    } catch (e) {
+      print('checkPhoneExists error: $e');
+      return null; // couldn't reach the server
+    }
+  }
+
+  /// Reset password after Firebase phone OTP verification.
+  /// Sends the Firebase ID token + the new password to the backend, which
+  /// verifies the token server-side and updates the matched user's password.
+  /// Returns the raw response map: {status, message, code?}.
+  static Future<Map<String, dynamic>> resetPasswordPhone({
+    required String idToken,
+    required String newPassword,
+  }) async {
+    String url = '$baseUrl/reset-password-phone';
+    try {
+      final request = await dio!.post(url,
+          data: {
+            'firebase_id_token': idToken,
+            'new_password': newPassword,
+          },
+          options: Options(headers: {
+            'apiKey': apiKey,
+            'devicetype': Platform.isAndroid ? "Android" : "ios",
+            'userrole': "user",
+          }));
+      return Map<String, dynamic>.from(request.data);
+    } catch (e) {
+      // Dio errors carry the server response body under `.response.data`.
+      try {
+        final resp = (e as dynamic).response;
+        if (resp?.data is Map) {
+          return Map<String, dynamic>.from(resp.data);
+        }
+      } catch (_) {}
+      return {'status': 0, 'message': 'Network error, please try again.'};
+    }
+  }
+
   static Future<UserModel?> login({
     String? email,
     String? password,

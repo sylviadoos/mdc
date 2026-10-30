@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:mdc_card/moduls/main/controller/main_controller.dart';
 import 'package:mdc_card/moduls/main/views/search_screen.dart';
 import 'package:mdc_card/moduls/offer/controllers/offer_controller.dart';
 import 'package:mdc_card/moduls/offer/views/screens/details_offer.dart';
 import 'package:mdc_card/moduls/offer/views/screens/offers_screen.dart';
+import 'package:mdc_card/moduls/heart_rate/heart_rate_screen.dart';
 import 'package:mdc_card/utils/themes/light_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -19,6 +19,8 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: HexaColor.fromHexa('#F6F6F6'),
       body: GetBuilder<MainController>(builder: (logic) {
+        WidgetsBinding.instance.addPostFrameCallback(
+            (_) => logic.loadAppSettings(context));
         return logic.isLoadingHome?Container(
             height: double.infinity,
             child: Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor,))): SingleChildScrollView(
@@ -79,6 +81,59 @@ class HomeScreen extends StatelessWidget {
                         ))),
               ),
               //
+              // Quick action: Heart Rate measurement (admin-toggleable)
+              if (logic.heartRateEnabled)
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+                child: GestureDetector(
+                  onTap: () => Get.to(() => const HeartRateScreen()),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(14),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black.withOpacity(.05),
+                            blurRadius: 8,
+                            offset: const Offset(0, 3)),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 46.w,
+                          height: 46.w,
+                          decoration: BoxDecoration(
+                            color: Colors.redAccent.withOpacity(.12),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(Icons.favorite,
+                              color: Colors.redAccent, size: 24.w),
+                        ),
+                        SizedBox(width: 12.w),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Measure Heart Rate',
+                                  style: TextStyle(
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.bold)),
+                              SizedBox(height: 2.h),
+                              Text('Check your pulse with the camera',
+                                  style: TextStyle(
+                                      fontSize: 12.sp, color: Colors.grey)),
+                            ],
+                          ),
+                        ),
+                        Icon(Icons.arrow_forward_ios,
+                            size: 16.w, color: Colors.grey),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               Container(
                 color: Colors.white,
                 width: double.infinity,
@@ -102,13 +157,19 @@ class HomeScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20)),
                           width: double.infinity,
-                          child: GFImageOverlay(
+                          child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
                               colorFilter: new ColorFilter.mode(
                                   Colors.black.withOpacity(.05),
                                   BlendMode.color),
-                              borderRadius: BorderRadius.circular(20),
                               image: NetworkImage(logic
-                                  .homeModel!.data!.offers![index].image!)),
+                                  .homeModel!.data!.offers![index].image!),
+                            ),
+                          ),
+                        ),
                         ),
                       ),
                     );

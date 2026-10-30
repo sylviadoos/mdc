@@ -8,6 +8,26 @@ allprojects {
 rootProject.buildDir = "../build"
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
+
+    // Fix for old Flutter plugins (e.g. webview_flutter_android from webview_flutter 3.x)
+    // that declare `package` in AndroidManifest but no `namespace` in build.gradle,
+    // which AGP 8+ requires. Registered here (before evaluationDependsOn) so the
+    // afterEvaluate hook is attached before the project gets evaluated.
+    afterEvaluate { project ->
+        if (project.plugins.hasPlugin("com.android.library")) {
+            def androidExt = project.extensions.findByName("android")
+            if (androidExt != null && androidExt.namespace == null) {
+                def manifestFile = androidExt.sourceSets.getByName("main").manifest.srcFile
+                if (manifestFile.exists()) {
+                    def manifest = new XmlSlurper().parse(manifestFile)
+                    def pkg = manifest.@package.text()
+                    if (pkg != null && pkg.trim() != "") {
+                        androidExt.namespace = pkg
+                    }
+                }
+            }
+        }
+    }
 }
 subprojects {
     project.evaluationDependsOn(":app")
