@@ -3,7 +3,7 @@ name: iOS Release
 on:
   push:
     branches:
-      - main
+      - Sylvia
 
 jobs:
   build-and-upload:
