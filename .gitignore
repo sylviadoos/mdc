@@ -1,3 +1,6 @@
+# iOS signing material (never commit)
+ios_certs/
+
 # Miscellaneous
 *.class
 *.log
