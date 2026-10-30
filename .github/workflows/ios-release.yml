@@ -133,10 +133,24 @@ jobs:
           cat >> ios/Flutter/Release.xcconfig <<EOF
           CODE_SIGNING_ALLOWED = YES
           CODE_SIGN_STYLE = Manual
+          CODE_SIGNING_REQUIRED = YES
           CODE_SIGN_IDENTITY = Apple Distribution
           DEVELOPMENT_TEAM = ${TEAM_ID}
           PROVISIONING_PROFILE_SPECIFIER = ${PROFILE_NAME}
           EOF
+
+          echo "----- Release.xcconfig contents -----"
+          cat ios/Flutter/Release.xcconfig
+          echo "--------------------------------------"
+
+          echo "----- Resolved build settings for Runner/Release -----"
+          xcodebuild -showBuildSettings \
+            -workspace ios/Runner.xcworkspace \
+            -scheme Runner \
+            -configuration Release \
+            -sdk iphoneos \
+            2>&1 | grep -E "CODE_SIGN|PROVISIONING_PROFILE|DEVELOPMENT_TEAM|PRODUCT_BUNDLE_IDENTIFIER" || true
+          echo "--------------------------------------------------------"
 
           xcodebuild archive \
             -workspace ios/Runner.xcworkspace \
