@@ -26,14 +26,24 @@ void main() async {
     name: "MDCCard",
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await initFirebaseMessaging();
-  tokenFireBase = await FirebaseMessaging.instance.getToken();
-  debugPrint(tokenFireBase.toString());
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
+  try {
+    await initFirebaseMessaging();
+    tokenFireBase = await FirebaseMessaging.instance
+        .getToken()
+        .timeout(const Duration(seconds: 10));
+    debugPrint(tokenFireBase.toString());
+    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+  } catch (e) {
+    // getToken() requires a real APNs token, which simulators (and
+    // occasionally real devices on a slow/unreliable connection) don't
+    // provide. Without this, a failure here blocks runApp() entirely,
+    // leaving the app on a permanent black screen.
+    debugPrint('Firebase messaging init failed: $e');
+  }
   SharePref.init();
   AuthDio.init();
   await AuthDio.getApiKey();
