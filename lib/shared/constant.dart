@@ -9,7 +9,7 @@ String? tokenFireBase;
 
 // ================= Backend base URL switch =================
 // Change ONLY this flag: true = local server, false = online (production).
-const bool useLocalServer = true;
+const bool useLocalServer = false;
 
 // Online (production) server.
 const String onlineBaseUrl = 'https://app.mdc-card.com/api';
