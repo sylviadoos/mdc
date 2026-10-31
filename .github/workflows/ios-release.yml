@@ -121,50 +121,18 @@ jobs:
 
       - name: Build IPA
         run: |
-          flutter build ios \
+          # Signing (CODE_SIGN_STYLE/CODE_SIGN_IDENTITY/PROVISIONING_PROFILE_SPECIFIER)
+          # is now set directly in project.pbxproj, so flutter build ipa's own
+          # archive+export (which invokes Flutter's internal build script
+          # exactly once) picks it up correctly. Previously this ran
+          # `flutter build ios --no-codesign` followed by a separate manual
+          # `xcodebuild archive`, which re-invoked Flutter's build script a
+          # second time and caused it to hang indefinitely (orphaned dart
+          # process still running when the job was cancelled after 60 min).
+          flutter build ipa \
             --release \
-            --no-codesign \
+            --export-options-plist=ios/ExportOptions.plist \
             --build-number=${{ github.run_number }}
-
-          # Scope manual signing to the Runner app target only (via the
-          # xcconfig Runner itself includes). Passing CODE_SIGN_STYLE etc.
-          # as xcodebuild command-line args instead would apply them to
-          # every target in the build, including CocoaPods library
-          # targets, which reject provisioning profiles outright.
-          cat >> ios/Flutter/Release.xcconfig <<EOF
-          CODE_SIGNING_ALLOWED = YES
-          CODE_SIGN_STYLE = Manual
-          CODE_SIGNING_REQUIRED = YES
-          CODE_SIGN_IDENTITY = Apple Distribution
-          DEVELOPMENT_TEAM = ${TEAM_ID}
-          PROVISIONING_PROFILE_SPECIFIER = ${PROFILE_NAME}
-          EOF
-
-          echo "----- Release.xcconfig contents -----"
-          cat ios/Flutter/Release.xcconfig
-          echo "--------------------------------------"
-
-          echo "----- Resolved build settings for Runner/Release -----"
-          xcodebuild -showBuildSettings \
-            -workspace ios/Runner.xcworkspace \
-            -scheme Runner \
-            -configuration Release \
-            -sdk iphoneos \
-            2>&1 | grep -E "CODE_SIGN|PROVISIONING_PROFILE|DEVELOPMENT_TEAM|PRODUCT_BUNDLE_IDENTIFIER" || true
-          echo "--------------------------------------------------------"
-
-          xcodebuild archive \
-            -workspace ios/Runner.xcworkspace \
-            -scheme Runner \
-            -configuration Release \
-            -sdk iphoneos \
-            -archivePath build/ios/archive/Runner.xcarchive \
-            CURRENT_PROJECT_VERSION=${{ github.run_number }}
-
-          xcodebuild -exportArchive \
-            -archivePath build/ios/archive/Runner.xcarchive \
-            -exportPath build/ios/ipa \
-            -exportOptionsPlist ios/ExportOptions.plist
 
       - name: Upload to App Store Connect
         env:
