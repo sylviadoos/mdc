@@ -8,7 +8,8 @@ on:
 
 jobs:
   build-and-upload:
-    runs-on: macos-latest
+    runs-on: macos-13
+    timeout-minutes: 60
     env:
       BUNDLE_ID: com.app.mdccard
       TEAM_ID: SV8BSPZW63
