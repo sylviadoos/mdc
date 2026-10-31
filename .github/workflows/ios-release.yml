@@ -169,3 +169,45 @@ jobs:
             --file build/ios/ipa/*.ipa \
             --apiKey "$APPSTORE_KEY_ID" \
             --apiIssuer "$APPSTORE_ISSUER_ID"
+
+  # Simulator builds are a completely different artifact: unsigned,
+  # built for the iphonesimulator SDK/architecture rather than a real
+  # device. appetize.io (and other browser-based "run it without a
+  # real iPhone" services) specifically require this - the device
+  # .ipa above fails there with "App is not a simulator build".
+  build-simulator:
+    runs-on: macos-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.35.0'
+          channel: stable
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Install CocoaPods
+        run: |
+          cd ios
+          pod install --repo-update
+
+      - name: Build simulator app
+        run: flutter build ios --simulator --release
+
+      - name: Zip simulator app
+        run: |
+          cd build/ios/iphonesimulator
+          zip -r Runner.app.zip Runner.app
+
+      - name: Upload simulator app artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: simulator-app
+          path: build/ios/iphonesimulator/Runner.app.zip
+          retention-days: 14
