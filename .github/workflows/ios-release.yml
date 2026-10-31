@@ -198,7 +198,7 @@ jobs:
           pod install --repo-update
 
       - name: Build simulator app
-        run: flutter build ios --simulator --release
+        run: flutter build ios --simulator --debug
 
       - name: Zip simulator app
         run: |
