@@ -145,6 +145,13 @@ jobs:
             --export-options-plist=ios/ExportOptions.plist \
             --build-number=${{ github.run_number }}
 
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ipa
+          path: build/ios/ipa/*.ipa
+          retention-days: 14
+
       - name: Upload to App Store Connect
         env:
           APPSTORE_KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
