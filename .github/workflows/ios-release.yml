@@ -54,13 +54,24 @@ jobs:
             -p "github" \
             build.keychain
 
+          # Prevent the keychain from auto-locking mid-build. If it
+          # re-locks while xcodebuild/codesign is still running, the next
+          # keychain access blocks on a GUI authorization prompt that can
+          # never appear (or be answered) in headless CI, hanging forever.
+          security set-keychain-settings -lut 21600 build.keychain
+
           security import certificate.p12 \
             -k build.keychain \
             -P "$IOS_P12_PASSWORD" \
-            -T /usr/bin/codesign
+            -T /usr/bin/codesign \
+            -T /usr/bin/security
 
+          # codesign: must be included here, not just apple-tool:,apple: -
+          # without it, codesign hits the same kind of unanswerable
+          # authorization prompt described above, even with the keychain
+          # unlocked.
           security set-key-partition-list \
-            -S apple-tool:,apple: \
+            -S apple-tool:,apple:,codesign: \
             -s \
             -k "github" \
             build.keychain
